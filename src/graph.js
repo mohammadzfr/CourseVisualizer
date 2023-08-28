@@ -28,59 +28,70 @@ const drag = simulation => {
 // Include D3.js library in your HTML before using this script.
 
 function createForceDirectedGraph(jsonUrl) {
-  const width = 800;
-  const height = 600;
+  const width = 1800;
+  const height = 1000;
+
+  const svg = d3.create("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("style", "max-width: 100%; height: auto;")
+    .call(d3.zoom()
+      .extent([[0, 0], [width, height]])
+      .scaleExtent([0.1, 4])
+      .on("zoom", zoomed));
+
+  const container = svg.append("g");
+
+  function zoomed(event) {
+    container.attr("transform", event.transform);
+  }
+
   d3.json(jsonUrl).then(data => {
     const root = d3.hierarchy(data);
     const links = root.links();
     const nodes = root.descendants();
 
     const simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id(d => d.id).distance(0).strength(1))
-        .force("charge", d3.forceManyBody().strength(-1000))
-        .force("x", d3.forceX())
-        .force("y", d3.forceY());
+      .force("link", d3.forceLink(links).id(d => d.id).distance(0).strength(1))
+      .force("charge", d3.forceManyBody().strength(-2000)) // Increase charge for more spacing
+      .force("x", d3.forceX())
+      .force("y", d3.forceY());
 
-    const svg = d3.create("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("viewBox", [-width / 2, -height / 2, width, height])
-        .attr("style", "max-width: 100%; height: auto;");
-
-    const link = svg.append("g")
-        .attr("stroke", "#999")
-        .attr("stroke-opacity", 0.6)
+    const link = container.append("g")
+      .attr("stroke", "#999")
+      .attr("stroke-opacity", 0.6)
       .selectAll("line")
       .data(links)
-      .join("line");
+      .join("line")
+      .attr("stroke-width", 2); // Adjust the stroke width as needed
 
-    const node = svg.append("g")
+    const node = container.append("g")
       .attr("fill", "#fff")
       .attr("stroke", "#000")
       .attr("stroke-width", 1.5)
       .selectAll("circle")
       .data(nodes)
       .join("circle")
-        .attr("fill", d => d.children ? null : "#000")
-        .attr("stroke", d => d.children ? null : "#fff")
-        .attr("r", 10)
-        .call(drag(simulation));
+      .attr("fill", d => d.children ? null : "#000")
+      .attr("stroke", d => d.children ? null : "#fff")
+      .attr("r", 15) // Increase node radius for more spacing
+      .call(drag(simulation));
 
-    // Append text to nodes
-    const nodeText = svg.append("g")
-      .selectAll("text")
+    const nodeText = container.selectAll("text")
       .data(nodes)
       .enter()
       .append("text")
       .text(d => d.data.name)
       .attr("font-size", d => Math.min(2 * d.r, (2 * d.r - 8) / d.data.name.length) + "px")
-      .attr("dy", ".35em")
+      .attr("dy", "2em") // Adjust vertical position of text
       .style("text-anchor", "middle")
       .attr("fill", "#333")
-      .style("pointer-events", "none"); // Disable pointer events on text
+      .style("pointer-events", "none");
 
     node.append("title")
       .text(d => d.data.name);
+
+
 
     simulation.on("tick", () => {
       link
@@ -105,5 +116,9 @@ function createForceDirectedGraph(jsonUrl) {
 }
 
 
-const jsonUrl = './data.json';
+
+
+
+
+const jsonUrl = './classes.json';
 createForceDirectedGraph(jsonUrl);

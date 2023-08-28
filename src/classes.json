@@ -1,0 +1,444 @@
+{
+    "name": "Root",
+    "children": [
+      {
+        "name": "SCI 099",
+        "children": []
+      },
+      {
+        "name": "CS 110",
+        "children": [
+          {
+            "name": "CS 201",
+            "children": [
+              {
+                "name": "CS 110",
+                "children": []
+              },
+              {
+                "name": "CS 115",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "CS 215",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "CS 115",
+        "children": [
+          {
+            "name": "CS 201",
+            "children": [
+              {
+                "name": "CS 110",
+                "children": []
+              },
+              {
+                "name": "CS 115",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "CS 215",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "CS 201",
+        "children": [
+          {
+            "name": "CS 301",
+            "children": [
+              {
+                "name": "CS 210",
+                "children": []
+              },
+              {
+                "name": "CS 215",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "CS 476",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "CS 210",
+        "children": [
+          {
+            "name": "CS 301",
+            "children": [
+              {
+                "name": "CS 210",
+                "children": []
+              },
+              {
+                "name": "CS 215",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CS 215",
+        "children": [
+          {
+            "name": "CS 301",
+            "children": [
+              {
+                "name": "CS 210",
+                "children": []
+              },
+              {
+                "name": "CS 215",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CS 280",
+        "children": []
+      },
+      {
+        "name": "CS 301",
+        "children": [
+          {
+            "name": "CS 401",
+            "children": [
+              {
+                "name": "CS 310",
+                "children": []
+              },
+              {
+                "name": "CS 320",
+                "children": []
+              },
+              {
+                "name": "CS 330",
+                "children": []
+              },
+              {
+                "name": "CS 335",
+                "children": []
+              },
+              {
+                "name": "CS 340",
+                "children": []
+              },
+              {
+                "name": "CS 350",
+                "children": []
+              },
+              {
+                "name": "CS 372",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CS 310",
+        "children": [
+          {
+            "name": "CS 401",
+            "children": [
+              {
+                "name": "CS 310",
+                "children": []
+              },
+              {
+                "name": "CS 320",
+                "children": []
+              },
+              {
+                "name": "CS 330",
+                "children": []
+              },
+              {
+                "name": "CS 335",
+                "children": []
+              },
+              {
+                "name": "CS 340",
+                "children": []
+              },
+              {
+                "name": "CS 350",
+                "children": []
+              },
+              {
+                "name": "CS 372",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CS 320",
+        "children": [
+          {
+            "name": "CS 401",
+            "children": [
+              {
+                "name": "CS 310",
+                "children": []
+              },
+              {
+                "name": "CS 320",
+                "children": []
+              },
+              {
+                "name": "CS 330",
+                "children": []
+              },
+              {
+                "name": "CS 335",
+                "children": []
+              },
+              {
+                "name": "CS 340",
+                "children": []
+              },
+              {
+                "name": "CS 350",
+                "children": []
+              },
+              {
+                "name": "CS 372",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CS 330",
+        "children": [
+          {
+            "name": "CS 401",
+            "children": [
+              {
+                "name": "CS 310",
+                "children": []
+              },
+              {
+                "name": "CS 320",
+                "children": []
+              },
+              {
+                "name": "CS 330",
+                "children": []
+              },
+              {
+                "name": "CS 335",
+                "children": []
+              },
+              {
+                "name": "CS 340",
+                "children": []
+              },
+              {
+                "name": "CS 350",
+                "children": []
+              },
+              {
+                "name": "CS 372",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CS 335",
+        "children": [
+          {
+            "name": "CS 401",
+            "children": [
+              {
+                "name": "CS 310",
+                "children": []
+              },
+              {
+                "name": "CS 320",
+                "children": []
+              },
+              {
+                "name": "CS 330",
+                "children": []
+              },
+              {
+                "name": "CS 335",
+                "children": []
+              },
+              {
+                "name": "CS 340",
+                "children": []
+              },
+              {
+                "name": "CS 350",
+                "children": []
+              },
+              {
+                "name": "CS 372",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CS 340",
+        "children": [
+          {
+            "name": "CS 401",
+            "children": [
+              {
+                "name": "CS 310",
+                "children": []
+              },
+              {
+                "name": "CS 320",
+                "children": []
+              },
+              {
+                "name": "CS 330",
+                "children": []
+              },
+              {
+                "name": "CS 335",
+                "children": []
+              },
+              {
+                "name": "CS 340",
+                "children": []
+              },
+              {
+                "name": "CS 350",
+                "children": []
+              },
+              {
+                "name": "CS 372",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CS 350",
+        "children": [
+          {
+            "name": "CS 401",
+            "children": [
+              {
+                "name": "CS 310",
+                "children": []
+              },
+              {
+                "name": "CS 320",
+                "children": []
+              },
+              {
+                "name": "CS 330",
+                "children": []
+              },
+              {
+                "name": "CS 335",
+                "children": []
+              },
+              {
+                "name": "CS 340",
+                "children": []
+              },
+              {
+                "name": "CS 350",
+                "children": []
+              },
+              {
+                "name": "CS 372",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CS 372",
+        "children": [
+          {
+            "name": "CS 401",
+            "children": [
+              {
+                "name": "CS 310",
+                "children": []
+              },
+              {
+                "name": "CS 320",
+                "children": []
+              },
+              {
+                "name": "CS 330",
+                "children": []
+              },
+              {
+                "name": "CS 335",
+                "children": []
+              },
+              {
+                "name": "CS 340",
+                "children": []
+              },
+              {
+                "name": "CS 350",
+                "children": []
+              },
+              {
+                "name": "CS 372",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CS 476",
+        "children": []
+      },
+      {
+        "name": "MATH 110",
+        "children": []
+      },
+      {
+        "name": "MATH 111",
+        "children": []
+      },
+      {
+        "name": "MATH 122",
+        "children": []
+      },
+      {
+        "name": "STAT 160",
+        "children": []
+      },
+      {
+        "name": "STAT 200",
+        "children": []
+      }
+    ]
+  }
+  
