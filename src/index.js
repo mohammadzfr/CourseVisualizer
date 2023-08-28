@@ -1,4 +1,4 @@
-import * as d3 from "d3"; // Use the correct path to d3
+// import * as d3 from "d3"; // Use when bundling w/ webpack
 
 console.log("testing");
 
