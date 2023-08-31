@@ -28,8 +28,8 @@ const drag = simulation => {
 // Include D3.js library in your HTML before using this script.
 
 function createForceDirectedGraph(jsonUrl) {
-  const width = 1800;
-  const height = 1000;
+  const width = 800;
+  const height = 600;
 
   const svg = d3.create("svg")
     .attr("width", width)
@@ -91,8 +91,6 @@ function createForceDirectedGraph(jsonUrl) {
     node.append("title")
       .text(d => d.data.name);
 
-
-
     simulation.on("tick", () => {
       link
         .attr("x1", d => d.source.x)
@@ -116,9 +114,5 @@ function createForceDirectedGraph(jsonUrl) {
 }
 
 
-
-
-
-
-const jsonUrl = './classes.json';
+const jsonUrl = './program.json';
 createForceDirectedGraph(jsonUrl);

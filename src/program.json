@@ -1,0 +1,30 @@
+
+{
+    "name": "Courses",
+    "prereqs": false,
+    "children": [
+        {
+            "name": "SCI 099",
+            "prereqs": true,
+            "children": []
+            
+        },
+        {
+            "name": "CS 110",
+            "children": [
+                {
+                    "name":"CS 115",
+                    "prereqs": true,
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "CS 115",
+            "prereqs": false,
+            "children": []
+            
+        }
+    ]
+    
+}
