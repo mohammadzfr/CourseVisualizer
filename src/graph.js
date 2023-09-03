@@ -1,5 +1,3 @@
-
-
 // Define the drag behavior
 const drag = simulation => {
   function dragstarted(event, d) {
@@ -28,13 +26,13 @@ const drag = simulation => {
 // Include D3.js library in your HTML before using this script.
 
 function createForceDirectedGraph(jsonUrl) {
-  const width = 800;
+  const width = 1000;
   const height = 600;
 
   const svg = d3.create("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("style", "max-width: 100%; height: auto;")
+    // .attr("style", "max-width: 100%; height: auto;")
     .call(d3.zoom()
       .extent([[0, 0], [width, height]])
       .scaleExtent([0.1, 4])
