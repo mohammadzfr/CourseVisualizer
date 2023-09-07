@@ -1,4 +1,3 @@
-
 // Define the drag behavior
 const drag = (simulation) => {
   function dragstarted(event, d) {
@@ -8,8 +7,16 @@ const drag = (simulation) => {
   }
 
   function dragged(event, d) {
-    d.fx = event.x;
-    d.fy = event.y;
+    d.fx = d.x + event.dx;
+    d.fy = d.y + event.dy;
+
+    // Update the link coordinates to stay connected with the node
+    link
+      .filter((linkData) => linkData.source === d || linkData.target === d)
+      .attr("x1", (linkData) => linkData.source.x)
+      .attr("y1", (linkData) => linkData.source.y)
+      .attr("x2", (linkData) => linkData.target.x)
+      .attr("y2", (linkData) => linkData.target.y);
   }
 
   function dragended(event, d) {
@@ -45,17 +52,38 @@ function createForceDirectedGraph(jsonUrl) {
   // Attach an event listener to the window's resize event
   window.addEventListener("resize", handleResize);
 
-  const width = 800;
-  const height = 600;
+  const width = 5000;
+  const height = 5000;
 
   const svg = d3
     .create("svg")
     .attr("width", "100%") // Set initial width to 100% of the parent container
     .attr("height", "100%") // Set initial height to 100% of the parent container
-    .attr("id", "graph");
+    .attr("id", "graph")
+    .attr("viewBox", `0 0 ${width} ${height}`);
 
   const container = svg.append("g");
 
+  container
+    .append("line")
+    .attr("x1", 0)
+    .attr("y1", height / 2)
+    .attr("x2", width)
+    .attr("y2", height / 2)
+    .attr("stroke", "gray")
+    .attr("stroke-width", 5)
+    .attr("stroke-dasharray", "4,4");
+
+  // Add vertical line
+  container
+    .append("line")
+    .attr("x1", width / 2)
+    .attr("y1", 0)
+    .attr("x2", width / 2)
+    .attr("y2", height)
+    .attr("stroke", "gray")
+    .attr("stroke-width", 5)
+    .attr("stroke-dasharray", "4,4");
   function zoomed(event) {
     container.attr("transform", event.transform);
   }
@@ -66,7 +94,7 @@ function createForceDirectedGraph(jsonUrl) {
       [0, 0],
       [width, height],
     ])
-    .scaleExtent([0.1, 4])
+    .scaleExtent([0, 0])
     .on("zoom", zoomed);
 
   svg.call(zoom);
@@ -82,7 +110,7 @@ function createForceDirectedGraph(jsonUrl) {
     .style("border", "1px solid #ccc")
     .style("padding", "10px")
     .style("box-shadow", "0 2px 4px rgba(0, 0, 0, 0.2)");
-  
+
   // popup.append("h2").text("Node Information");
 
   // append name of popup
@@ -112,7 +140,7 @@ function createForceDirectedGraph(jsonUrl) {
     green: "green",
     // Add more colors as needed
   };
-  
+
   // Create markers dynamically based on markerColors
   for (const color in markerColors) {
     svg
@@ -130,14 +158,12 @@ function createForceDirectedGraph(jsonUrl) {
       .attr("d", "M0,-3L6,0L0,3");
   }
 
-
   d3.json(jsonUrl)
     .then((data) => {
       const root = d3.hierarchy(data);
       const links = root.links();
       const nodes = root.descendants();
 
-      
       const simulation = d3
         .forceSimulation(nodes)
         .force(
@@ -152,7 +178,7 @@ function createForceDirectedGraph(jsonUrl) {
         .force("x", d3.forceX(width / 2).strength(0.1)) // HACK: pushes out of corner
         .force("y", d3.forceY(height / 2).strength(0.1)) // HACK: pushes out of corner
         .force("collision", d3.forceCollide().radius(15)); // Prevent node overlap
-      
+
       // container that stores all links between nodes and their properties
       const link = container
         .append("g")
@@ -168,8 +194,8 @@ function createForceDirectedGraph(jsonUrl) {
           console.log(d.target.data.linkColor);
           return `url(#${d.target.data.linkColor || "default"}-marker)`;
         });
-      
-      // container that stores all nodes and their properties 
+
+      // container that stores all nodes and their properties
       const node = container
         .append("g")
         .attr("fill", "#fff")
@@ -200,10 +226,9 @@ function createForceDirectedGraph(jsonUrl) {
         .style("text-anchor", "middle")
         .attr("fill", "#333")
         .style("pointer-events", "none");
-      
+
       // appending node's name to respective node
       node.append("title").text((d) => d.data.code);
-      
 
       simulation.on("tick", () => {
         link
