@@ -1,5 +1,25 @@
 #graph-container {
+    /* overflow: hidden; */
     border: 1px solid black;
     border-radius: 10px;
     width: 100%;
 }
+
+#node-popup {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#node-info {
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
+#graph {
+  border: 1px solid red;
+}
+

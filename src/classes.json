@@ -1,38 +1,119 @@
 {
-    "name": "Root",
-    "children": [
-      {
-        "name": "SCI 099",
-        "prereqs": false,
-        "children": []
-      },
-      {
-        "name": "CS 110",
-        "prereqs": false,
-        "children": [
-          {
-            "name": "CS 201",
-            "prereqs": true,
-            "children": [
-              {
-                "name": "CS 110",
-                "prereqs": false,
-                "children": []
-              },
-              {
-                "name": "CS 115",
-                "prereqs": false,
-                "children": []
-              }
-            ]
-          },
-          {
-            "name": "CS 215",
-            "prereqs": false,
-            "children": []
-          }
-        ]
-      }
-    ]
-  }
-  
+  "code": "Courses",
+  "children": [
+    {
+      "code": "SCI 099",
+      "linkColor": "red"
+    },
+    {
+      "code": "CS",
+      "linkColor": "red",
+      "children": [
+        {
+          "code": "CS 110",
+          "linkColor": "red"
+        },
+        {
+          "code": "CS 115",
+          "linkColor": "red"
+        },
+        {
+          "code": "CS 201",
+          "linkColor": "red",
+          "children": [
+            {
+              "code": "CS 210",
+              "linkColor": "red"
+            },
+            {
+              "code": "CS 215",
+              "linkColor": "red"
+            },
+            {
+              "code": "CS 280",
+              "linkColor": "red"
+            }
+          ]
+        },
+        {
+          "code": "CS 301",
+          "linkColor": "red",
+          "children": [
+            {
+              "code": "CS 310",
+              "linkColor": "red"
+            },
+            {
+              "code": "CS 320",
+              "linkColor": "red"
+            },
+            {
+              "code": "CS 330",
+              "linkColor": "red",
+              "children": [
+                {
+                  "code": "CS 335",
+                  "linkColor": "red"
+                },
+                {
+                  "code": "CS 340",
+                  "linkColor": "red"
+                },
+                {
+                  "code": "CS 350",
+                  "linkColor": "red"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "CS 372",
+          "linkColor": "red"
+        },
+        {
+          "code": "CS 476",
+          "linkColor": "red"
+        }
+      ]
+    },
+    {
+      "code": "MATH",
+      "linkColor": "red",
+      "children": [
+        {
+          "code": "MATH 110",
+          "linkColor": "red"
+        },
+        {
+          "code": "MATH 111",
+          "linkColor": "red"
+        },
+        {
+          "code": "MATH 122",
+          "linkColor": "red",
+          "children": [
+            {
+              "code": "MATH 221",
+              "linkColor": "red"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "STAT",
+      "linkColor": "red",
+      "children": [
+        {
+          "code": "STAT 160",
+          "linkColor": "green"
+        },
+        {
+          "code": "STAT 200",
+          "linkColor": "red"
+        }
+      ]
+    }
+  ]
+}
