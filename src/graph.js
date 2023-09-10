@@ -36,7 +36,10 @@ const drag = (simulation) => {
 
     // Makes sure the link stays connected to the node and not the cursor
     link
-      .filter((linkData) => linkData.source === nodeData || linkData.target === nodeData)
+      .filter(
+        (linkData) =>
+          linkData.source === nodeData || linkData.target === nodeData
+      )
       .attr("x1", (linkData) => linkData.source.x)
       .attr("y1", (linkData) => linkData.source.y)
       .attr("x2", (linkData) => linkData.target.x)
@@ -76,6 +79,7 @@ function createForceDirectedGraph(jsonUrl) {
     // Get the current dimensions of the parent container
     const width = window.innerWidth;
     const height = window.innerHeight;
+    let node, links;
 
     // Update the SVG dimensions
     svg.attr("width", width).attr("height", height);
@@ -238,7 +242,7 @@ function createForceDirectedGraph(jsonUrl) {
         });
 
       // container that creates all nodes as circles
-      const node = container
+      node = container // HACK: should be declared locally but toggleCompletion function can't access properly
         .append("g")
         .attr("fill", "#fff")
         .attr("stroke", "#000")
@@ -246,14 +250,15 @@ function createForceDirectedGraph(jsonUrl) {
         .selectAll("circle")
         .data(nodes)
         .join("circle")
-        .attr("fill", (nodeData) =>
-          nodeData.completed ? "green" : "#000"
-        )
+        .attr("fill", (nodeData) => (nodeData.completed ? "green" : "#000"))
         .attr("r", 15) // Increase node radius for more spacing
         .attr("class", "node")
         .attr("data-code", (nodeData) => nodeData.code)
         .call(drag(simulation))
-        .on("click", (mouseEvent, nodeData) => showNodeInfo(mouseEvent, nodeData))
+        .on("click", (mouseEvent, nodeData) => {
+          selectedNode = nodeData;
+          showNodeInfo(mouseEvent, nodeData);
+        })
         .on("mouseover", () => node.style("cursor", "pointer"))
         .on("mouseout", () => node.style("cursor", "default"));
 
@@ -266,7 +271,11 @@ function createForceDirectedGraph(jsonUrl) {
         .text((nodeData) => nodeData.code)
         .attr(
           "font-size",
-          (nodeData) => Math.min(2 * nodeData.r, (2 * nodeData.r - 8) / nodeData.code.length) + "px"
+          (nodeData) =>
+            Math.min(
+              2 * nodeData.r,
+              (2 * nodeData.r - 8) / nodeData.code.length
+            ) + "px"
         )
         .attr("dy", "2em") // Adjust vertical position of text
         .style("text-anchor", "middle")
@@ -288,18 +297,28 @@ function createForceDirectedGraph(jsonUrl) {
 
         // Slightly deprecated but it sets the initial node pos + any changes
         // bottom code does the same thing but also adds a bounding box
-        node.attr("cx", (nodeData) => nodeData.x).attr("cy", (nodeData) => nodeData.y);
+        node
+          .attr("cx", (nodeData) => nodeData.x)
+          .attr("cy", (nodeData) => nodeData.y);
 
         // renders text with respective node
-        nodeText.attr("x", (nodeData) => nodeData.x).attr("y", (nodeData) => nodeData.y);
+        nodeText
+          .attr("x", (nodeData) => nodeData.x)
+          .attr("y", (nodeData) => nodeData.y);
 
         // creates bounding box for nodes within defined dimensions
         node
           .attr("cx", (nodeData) => {
-            return (nodeData.x = Math.max(15, Math.min(width - 15, nodeData.x)));
+            return (nodeData.x = Math.max(
+              15,
+              Math.min(width - 15, nodeData.x)
+            ));
           })
           .attr("cy", (nodeData) => {
-            return (nodeData.y = Math.max(15, Math.min(height - 15, nodeData.y)));
+            return (nodeData.y = Math.max(
+              15,
+              Math.min(height - 15, nodeData.y)
+            ));
           });
       });
 
@@ -314,7 +333,8 @@ function createForceDirectedGraph(jsonUrl) {
 
       // error message for user
       const statusElement = document.getElementById("status-message");
-      statusElement.textContent = "Error loading JSON data. Please try again later";
+      statusElement.textContent =
+        "Error loading JSON data. Please try again later";
     });
 
   /***** POPUP ELEMENT *****/
@@ -351,17 +371,25 @@ function createForceDirectedGraph(jsonUrl) {
     .style("white-space", "pre-wrap");
 
   // Event listener and button for closing
-  popup.append("button").text("Close").on("click", closePopup);
+  popup
+    .append("button")
+    .text("Close")
+    .on("click", closePopup);
+    
+  // Event listener and button for toggling course completion
+  popup
+    .append("button")
+    .text("Mark as Completed")
+    .on("click", (mouseEvent) => toggleCompletion(mouseEvent));
 
   /**
    * Grabs name, description, and prereqs from clicked node
    * and displays information in popup
-   * 
-   * @param {*} mouseEvent 
-   * @param {*} nodeData 
+   *
+   * @param {*} mouseEvent
+   * @param {*} nodeData
    */
   function showNodeInfo(mouseEvent, nodeData) {
-  
     //grabbing information from node
     const nameInfo = nodeData.code;
     const titleInfo = nodeData.name;
@@ -393,46 +421,32 @@ function createForceDirectedGraph(jsonUrl) {
     // Displays the popup
     popup.style("display", "block");
 
-  // Remove any previously added completion toggle buttons
-  popup.selectAll("#completion-toggle-button").remove();
-
-  // Add a button with a specific ID for toggling completion
-  popup
-    .append("button")
-    .text(nodeData.completed ? "Mark as Incomplete" : "Mark as Completed")
-    .attr("id", "completion-toggle-button")
-    .on("click", () => toggleCompletion(nodeData.code));
-
     currentDisplayedNode = nodeData;
   }
 
   /**
-   * Hides the popup when "close" button is pressed 
-   */ 
+   * Hides the popup when "close" button is pressed
+   */
   function closePopup() {
     popup.style("display", "none");
   }
-  
-  function toggleCompletion(courseCode) {
-    // Find the corresponding node by its code
-    const node = d3.select(`circle[data-code="${courseCode}"]`);
-  
-    // Toggle the completed status of the course
-    const completed = !node.datum().completed;
-    node.datum().completed = completed;
-  
-    // Update the visual representation of the node based on its completion status
-    if (completed) {
-      // Change the fill color to indicate completion
-      node.style("fill", "green");
-    } else {
-      // Change the fill color to its original color (based on linkColor property)
-      const linkColor = node.datum().linkColor || "#999";
-      node.style("fill", linkColor);
+
+  function toggleCompletion(mouseEvent) {
+    console.log(mouseEvent);
+    if (selectedNode) {
+      selectedNode.completed = !selectedNode.completed;
+
+      // Update the button text
+      mouseEvent.button.textContent = selectedNode.completed
+        ? "Mark as Incomplete"
+        : "Mark as Completed";
+
+      // Update the node color based on completion status
+      node.attr("fill", (d) =>
+        d.completed ? "green" : d.children ? null : "#000"
+      );
     }
   }
-  
-
 
   /***** POPUP DRAG BEHAVIOR *****/
   // Define the drag behavior for the popup
@@ -469,7 +483,10 @@ function createForceDirectedGraph(jsonUrl) {
         "left",
         parseFloat(d3.select(this).style("left")) + dragEvent.dx + "px"
       )
-      .style("top", parseFloat(d3.select(this).style("top")) + dragEvent.dy + "px");
+      .style(
+        "top",
+        parseFloat(d3.select(this).style("top")) + dragEvent.dy + "px"
+      );
   }
 
   /**
