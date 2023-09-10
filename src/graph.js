@@ -1,8 +1,16 @@
-// measures if a node has been dragged
+/**
+ * Filename: graph.js
+ * Description: Draws an interactive graph using D3.js
+ * Author: Mohammad Zafar
+ * Date: 09/10/2023
+ */
+
+/***** DRAG FUNCTIONALITY *****/
+// defines the drag simulation for nodes
 const drag = (simulation) => {
   /**
    * Initiates the start of the drag
-   * 
+   *
    * @param {*} event - Drag trigger for node
    * @param {*} d - The element being dragged
    */
@@ -15,7 +23,7 @@ const drag = (simulation) => {
 
   /**
    * Updates the node to follow the user pointer
-   * 
+   *
    * @param {*} event - Drag trigger for node
    * @param {*} d - The element being dragged
    */
@@ -32,9 +40,9 @@ const drag = (simulation) => {
       .attr("y2", (linkData) => linkData.target.y);
   }
 
-    /**
+  /**
    * Ceases input from user and lets D3 simulation regain control
-   * 
+   *
    * @param {*} event - Drag trigger for node
    * @param {*} d - The element being dragged
    */
@@ -48,17 +56,16 @@ const drag = (simulation) => {
   return d3
     .drag()
     .on("start", dragstarted)
-    .on("drag", (event, d) => dragged(event, d, link))
+    .on("drag", dragged)
     .on("end", dragended);
 };
 
 /**
  * Responsible for creating and appending a force directed graph to DOM using D3js
- * 
+ *
  * @param {*} jsonUrl - Path to hierarchal data in JSON format
  */
 function createForceDirectedGraph(jsonUrl) {
-  
   /**
    * Dynamically resizes the svg when window dimensions are changed
    */
@@ -88,8 +95,8 @@ function createForceDirectedGraph(jsonUrl) {
 
   const svg = d3
     .create("svg")
-    .attr("width", "100%") // Set initial width to 100% of the parent container
-    .attr("height", "100%") // Set initial height to 100% of the parent container
+    .attr("width", "100%")
+    .attr("height", "100%")
     .attr("id", "graph")
     .attr("viewBox", `0 0 ${width} ${height}`);
 
@@ -126,14 +133,15 @@ function createForceDirectedGraph(jsonUrl) {
   //   `translate(${initialTranslateX}, ${initialTranslateY}) scale(${initialZoomScale})`
   // );
 
+  // DEFINING ZOOM
   const zoom = d3
-  .zoom()
-  .extent([
-    [0, 0],
-    [width, height],
-  ])
-  .scaleExtent([1, 10])
-  .on("zoom", zoomed);
+    .zoom()
+    .extent([
+      [0, 0],
+      [width, height],
+    ])
+    .scaleExtent([1, 10])
+    .on("zoom", zoomed);
 
   svg.call(zoom);
 
@@ -147,7 +155,7 @@ function createForceDirectedGraph(jsonUrl) {
   const markerColors = {
     red: "red",
     blue: "blue",
-    green: "green"
+    green: "green",
     // Add more colors if needed
   };
 
@@ -176,7 +184,7 @@ function createForceDirectedGraph(jsonUrl) {
 
       const nodes = data.nodes;
       const links = data.links;
-      
+
       const simulation = d3
         .forceSimulation(nodes)
         .force(
@@ -191,7 +199,7 @@ function createForceDirectedGraph(jsonUrl) {
         .force("x", d3.forceX(width / 2).strength(0.1)) // HACK: pushes out of corner
         .force("y", d3.forceY(height / 2).strength(0.1)) // HACK: pushes out of corner
         .force("collision", d3.forceCollide().radius(15)); // Prevent node overlap
-      
+
       // Create a copy of your original links array with reversed source and target
       const reversedLinks = links.map((link) => ({
         source: link.target, // Reverse source and target
@@ -209,7 +217,7 @@ function createForceDirectedGraph(jsonUrl) {
         .selectAll("line")
         .data(allLinks)
         .join("line")
-        .attr("stroke-width", 2) 
+        .attr("stroke-width", 2)
         .attr("stroke", (d) => d.source.linkColor || "#999") // Set the link color based on the source node's linkColor property
         .attr("stroke-dasharray", "4,4") // Set the stroke-dasharray to create dotted lines
         .attr("marker-end", (d) => {
@@ -227,7 +235,9 @@ function createForceDirectedGraph(jsonUrl) {
         .selectAll("circle")
         .data(nodes)
         .join("circle")
-        .attr("fill", (d) => (d.children ? null : "#000"))
+        .attr("fill", (d) =>
+          d.completed ? "green" : d.children ? null : "#000"
+        )
         .attr("r", 15) // Increase node radius for more spacing
         .attr("class", "node")
         .call(drag(simulation))
@@ -254,6 +264,8 @@ function createForceDirectedGraph(jsonUrl) {
       // appending node's name to respective node
       node.append("title").text((d) => d.code);
 
+      /***** GRAPH SIMULATION *****/
+      // update the link, node, and text pos every tick
       simulation.on("tick", () => {
         link
           .attr("x1", (d) => d.source.x)
@@ -282,8 +294,9 @@ function createForceDirectedGraph(jsonUrl) {
     .catch((error) => {
       console.error("Error loading JSON:", error);
     });
-    // Create a popup element
-    const popup = d3
+
+  /***** POPUP ELEMENT *****/
+  const popup = d3
     .select("body")
     .append("div")
     .attr("id", "node-popup")
@@ -293,14 +306,13 @@ function createForceDirectedGraph(jsonUrl) {
     .style("border", "1px solid #ccc")
     .style("padding", "10px")
     .style("box-shadow", "0 2px 4px rgba(0, 0, 0, 0.2)");
-  // append name as h2 within popup
+
   const nameInfoElement = popup
     .append("h2")
     .attr("id", "node-info")
     .style("font-family", "monospace")
     .style("white-space", "pre-wrap");
 
-  
   const descInfoElement = popup
     .append("pre")
     .attr("id", "node-info")
@@ -314,11 +326,18 @@ function createForceDirectedGraph(jsonUrl) {
     .style("white-space", "pre-wrap");
 
   popup.append("button").text("Close").on("click", closePopup);
+  popup.append("button").text("Mark as Completed").on("click", toggleCompletedStatus(d));
 
-  // Function to show node information (popup)
+  /**
+   * Grabs name, description, and prereqs from clicked node
+   * and displays information in popup
+   * 
+   * @param {*} event 
+   * @param {*} d 
+   */
   function showNodeInfo(event, d) {
-    // grab the name, description, and prerequisites of the clicked node
-    // const nameInfo = JSON.stringify(d.data.name, null, 2);
+  
+    //grabbing information from node
     const nameInfo = d.code;
     const titleInfo = d.name;
     const descInfo = JSON.stringify(d.description, null, 2);
@@ -350,10 +369,49 @@ function createForceDirectedGraph(jsonUrl) {
     popup.style("display", "block");
   }
 
-  // function to close popup
+  // Function to toggle the "completed" status of a node
+  function toggleCompletedStatus(d) {
+    d.completed = !d.completed; // Toggle the completed property
+    // Update the node's fill color based on the completed status
+    node.attr("fill", (d) =>
+      d.completed ? "green" : d.children ? null : "#000"
+    );
+  }
+
+  /**
+   * Hides the popup when "close" button is pressed */ 
   function closePopup() {
     popup.style("display", "none");
   }
+
+  // Function to toggle the completion status of a node
+  function toggleCompletedStatus(node) {
+    node.completed = !node.completed;
+
+    // Update the node's color based on completion status
+    node.color = node.completed ? "green" : node.linkColor || "blue";
+
+    // Update the node's color in the visualization
+    container
+      .selectAll(".node")
+      .filter((d) => d.code === node.code)
+      .attr("fill", (d) => d.color);
+  }
+
+  // Attach click event handler to the "Mark as Completed" button
+  container.selectAll(".mark-completed").on("click", function () {
+    // Get the node associated with the currently opened popup
+    const currentNode = d3.select(this.parentNode).datum();
+    toggleCompletedStatus(currentNode);
+
+    // Close the popup (you may have your own logic for this)
+    closePopup();
+
+    // You can also update the button text based on completion status
+    d3.select(this).text(
+      currentNode.completed ? "Mark as Incomplete" : "Mark as Completed"
+    );
+  });
 
   // Define the drag behavior for the popup
   const dragPopup = d3
@@ -371,19 +429,19 @@ function createForceDirectedGraph(jsonUrl) {
 
   /**
    * Labels popup as "active" and allows for window dragging
-   * 
-   * @param {*} event 
+   *
+   * @param {*} event - drag trigger for popup
    */
-  
+
   function dragstarted(event) {
     d3.select(this).raise().classed("active", true);
   }
 
- /**
-  * Left and Top corners of popup follow the pointer on drag
-  * 
-  * @param {*} event 
-  */
+  /**
+   * Left and Top corners of popup follow the pointer on drag
+   *
+   * @param {*} event - drag trigger for popup
+   */
   function dragged(event) {
     d3.select(this)
       .style(
@@ -395,8 +453,8 @@ function createForceDirectedGraph(jsonUrl) {
 
   /**
    * Disables dragging by removing the "active" class
-   * 
-   * @param {*} event 
+   *
+   * @param {*} event - drag trigger for popup
    */
   function dragended(event) {
     d3.select(this).classed("active", false);
