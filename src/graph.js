@@ -30,7 +30,7 @@ const drag = (simulation) => {
    * @param {*} dragEvent - Drag trigger for node
    * @param {*} nodeData - The element being dragged
    */
-  function dragged(dragEvent, d) {
+  function dragged(dragEvent, nodeData) {
     nodeData.fx = nodeData.x + dragEvent.dx;
     nodeData.fy = nodeData.y + dragEvent.dy;
 
@@ -96,6 +96,7 @@ function createForceDirectedGraph(jsonUrl) {
   const height = 5000;
   // modify this value to change the zoom scale
   const initialZoomScale = 5; // HACK: should be based on the size of the graph
+  let currentDisplayedNode = null;
 
   const svg = d3
     .create("svg")
@@ -246,10 +247,11 @@ function createForceDirectedGraph(jsonUrl) {
         .data(nodes)
         .join("circle")
         .attr("fill", (nodeData) =>
-          nodeData.completed ? "green" : nodeData.children ? null : "#000"
+          nodeData.completed ? "green" : "#000"
         )
         .attr("r", 15) // Increase node radius for more spacing
         .attr("class", "node")
+        .attr("data-code", (nodeData) => nodeData.code)
         .call(drag(simulation))
         .on("click", (mouseEvent, nodeData) => showNodeInfo(mouseEvent, nodeData))
         .on("mouseover", () => node.style("cursor", "pointer"))
@@ -284,7 +286,8 @@ function createForceDirectedGraph(jsonUrl) {
           .attr("x2", (nodeData) => nodeData.target.x)
           .attr("y2", (nodeData) => nodeData.target.y);
 
-        // dont really know what this does but it was in the d3 docs :)
+        // Slightly deprecated but it sets the initial node pos + any changes
+        // bottom code does the same thing but also adds a bounding box
         node.attr("cx", (nodeData) => nodeData.x).attr("cy", (nodeData) => nodeData.y);
 
         // renders text with respective node
@@ -389,6 +392,18 @@ function createForceDirectedGraph(jsonUrl) {
 
     // Displays the popup
     popup.style("display", "block");
+
+  // Remove any previously added completion toggle buttons
+  popup.selectAll("#completion-toggle-button").remove();
+
+  // Add a button with a specific ID for toggling completion
+  popup
+    .append("button")
+    .text(nodeData.completed ? "Mark as Incomplete" : "Mark as Completed")
+    .attr("id", "completion-toggle-button")
+    .on("click", () => toggleCompletion(nodeData.code));
+
+    currentDisplayedNode = nodeData;
   }
 
   /**
@@ -397,6 +412,27 @@ function createForceDirectedGraph(jsonUrl) {
   function closePopup() {
     popup.style("display", "none");
   }
+  
+  function toggleCompletion(courseCode) {
+    // Find the corresponding node by its code
+    const node = d3.select(`circle[data-code="${courseCode}"]`);
+  
+    // Toggle the completed status of the course
+    const completed = !node.datum().completed;
+    node.datum().completed = completed;
+  
+    // Update the visual representation of the node based on its completion status
+    if (completed) {
+      // Change the fill color to indicate completion
+      node.style("fill", "green");
+    } else {
+      // Change the fill color to its original color (based on linkColor property)
+      const linkColor = node.datum().linkColor || "#999";
+      node.style("fill", linkColor);
+    }
+  }
+  
+
 
   /***** POPUP DRAG BEHAVIOR *****/
   // Define the drag behavior for the popup
