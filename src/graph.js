@@ -79,7 +79,7 @@ function createForceDirectedGraph(jsonUrl) {
     // Get the current dimensions of the parent container
     const width = window.innerWidth;
     const height = window.innerHeight;
-    let node, links;
+    
 
     // Update the SVG dimensions
     svg.attr("width", width).attr("height", height);
@@ -101,6 +101,7 @@ function createForceDirectedGraph(jsonUrl) {
   // modify this value to change the zoom scale
   const initialZoomScale = 5; // HACK: should be based on the size of the graph
   let currentDisplayedNode = null;
+  let node, links;
 
   const svg = d3
     .create("svg")
@@ -375,7 +376,7 @@ function createForceDirectedGraph(jsonUrl) {
     .append("button")
     .text("Close")
     .on("click", closePopup);
-    
+
   // Event listener and button for toggling course completion
   popup
     .append("button")
@@ -431,6 +432,11 @@ function createForceDirectedGraph(jsonUrl) {
     popup.style("display", "none");
   }
 
+  /**
+   * Allows classes to be marked as complete or not
+   * 
+   * @param {*} mouseEvent - Required info for button selection
+   */
   function toggleCompletion(mouseEvent) {
     console.log(mouseEvent);
     if (selectedNode) {
