@@ -1,7 +1,10 @@
 /**
  * Filename: graph.js
- * Description: Draws an interactive graph using D3.js
+ * Description: Draws an force-directed graph designed to display courses using D3.js
  * Author: Mohammad Zafar
+ * References: Mike Bostock: https://observablehq.com/@d3/force-directed-tree?intent=fork
+ *             D3 Team: https://observablehq.com/@d3/disjoint-force-directed-graph/2?intent=fork
+ *             D3 Team: https://observablehq.com/@d3/force-directed-graph/2?intent=fork
  * Date: 09/10/2023
  */
 
@@ -11,29 +14,29 @@ const drag = (simulation) => {
   /**
    * Initiates the start of the drag
    *
-   * @param {*} event - Drag trigger for node
-   * @param {*} d - The element being dragged
+   * @param {*} dragEvent - Drag trigger for node
+   * @param {*} nodeData - The element being dragged
    */
-  function dragstarted(event, d) {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
-    console.log(event);
+  function dragstarted(dragEvent, nodeData) {
+    if (!dragEvent.active) simulation.alphaTarget(0.3).restart();
+    nodeData.fx = nodeData.x;
+    nodeData.fy = nodeData.y;
+    console.log(dragEvent);
   }
 
   /**
    * Updates the node to follow the user pointer
    *
-   * @param {*} event - Drag trigger for node
-   * @param {*} d - The element being dragged
+   * @param {*} dragEvent - Drag trigger for node
+   * @param {*} nodeData - The element being dragged
    */
-  function dragged(event, d) {
-    d.fx = d.x + event.dx;
-    d.fy = d.y + event.dy;
+  function dragged(dragEvent, d) {
+    nodeData.fx = nodeData.x + dragEvent.dx;
+    nodeData.fy = nodeData.y + dragEvent.dy;
 
-    // make sure link stays connected to the node
+    // Makes sure the link stays connected to the node and not the cursor
     link
-      .filter((linkData) => linkData.source === d || linkData.target === d)
+      .filter((linkData) => linkData.source === nodeData || linkData.target === nodeData)
       .attr("x1", (linkData) => linkData.source.x)
       .attr("y1", (linkData) => linkData.source.y)
       .attr("x2", (linkData) => linkData.target.x)
@@ -43,14 +46,14 @@ const drag = (simulation) => {
   /**
    * Ceases input from user and lets D3 simulation regain control
    *
-   * @param {*} event - Drag trigger for node
-   * @param {*} d - The element being dragged
+   * @param {*} dragEvent - Drag trigger for node
+   * @param {*} nodeData - The element being dragged
    */
 
-  function dragended(event, d) {
-    if (!event.active) simulation.alphaTarget(0);
-    d.fx = null;
-    d.fy = null;
+  function dragended(dragEvent, nodeData) {
+    if (!dragEvent.active) simulation.alphaTarget(0);
+    nodeData.fx = null;
+    nodeData.fy = null;
   }
 
   return d3
@@ -88,6 +91,7 @@ function createForceDirectedGraph(jsonUrl) {
   window.addEventListener("resize", handleResize);
 
   /***** CREATING MAIN PARENT SVG *****/
+  // initial dimensions
   const width = 5000;
   const height = 5000;
   // modify this value to change the zoom scale
@@ -145,10 +149,11 @@ function createForceDirectedGraph(jsonUrl) {
 
   svg.call(zoom);
 
+  // allows the zoom to start from the initial zoom scale to avoid initial zoom jump
   zoom.scaleBy(svg, initialZoomScale);
 
-  function zoomed(event) {
-    container.attr("transform", event.transform);
+  function zoomed(scrollEvent) {
+    container.attr("transform", scrollEvent.transform);
   }
 
   /***** GENERATING ARROWHEADS FOR LINKS *****/
@@ -176,15 +181,18 @@ function createForceDirectedGraph(jsonUrl) {
       .attr("d", "M0,-3L6,0L0,3");
   }
 
+  /***** PARSING INFO FROM JSON *****/
   d3.json(jsonUrl)
     .then((data) => {
       // const root = d3.hierarchy(data);
       // const links = root.links();
       // const nodes = root.descendants();
 
+      // defining constants
       const nodes = data.nodes;
       const links = data.links;
 
+      /***** DEFINES MAIN GRAPH SIMULATION *****/
       const simulation = d3
         .forceSimulation(nodes)
         .force(
@@ -200,7 +208,9 @@ function createForceDirectedGraph(jsonUrl) {
         .force("y", d3.forceY(height / 2).strength(0.1)) // HACK: pushes out of corner
         .force("collision", d3.forceCollide().radius(15)); // Prevent node overlap
 
-      // Create a copy of your original links array with reversed source and target
+      // HACK: Creates copy of links to switch the target and source
+      //       This is done to flip the arrowheads since they follow
+      //       the direction of the link (source to target)
       const reversedLinks = links.map((link) => ({
         source: link.target, // Reverse source and target
         target: link.source,
@@ -210,7 +220,7 @@ function createForceDirectedGraph(jsonUrl) {
       // Add the reversedLinks to the original links array
       const allLinks = [...reversedLinks];
 
-      // container that stores all links between nodes and their properties
+      // container that creates all links between nodes as lines
       link = container // HACK: should be declared locally but dragged function can't access properly
         .append("g")
         .attr("stroke-opacity", 0.6)
@@ -218,15 +228,15 @@ function createForceDirectedGraph(jsonUrl) {
         .data(allLinks)
         .join("line")
         .attr("stroke-width", 2)
-        .attr("stroke", (d) => d.source.linkColor || "#999") // Set the link color based on the source node's linkColor property
+        .attr("stroke", (nodeData) => nodeData.source.linkColor || "#999") // Set the link color based on the source node's linkColor property
         .attr("stroke-dasharray", "4,4") // Set the stroke-dasharray to create dotted lines
-        .attr("marker-end", (d) => {
+        .attr("marker-end", (nodeData) => {
           // Dynamically set the marker-end based on linkColor property
-          console.log(d.source.linkColor);
-          return `url(#${d.source.linkColor || "default"}-marker)`;
+          console.log(nodeData.source.linkColor);
+          return `url(#${nodeData.source.linkColor || "default"}-marker)`;
         });
 
-      // container that stores all nodes and their properties
+      // container that creates all nodes as circles
       const node = container
         .append("g")
         .attr("fill", "#fff")
@@ -235,13 +245,13 @@ function createForceDirectedGraph(jsonUrl) {
         .selectAll("circle")
         .data(nodes)
         .join("circle")
-        .attr("fill", (d) =>
-          d.completed ? "green" : d.children ? null : "#000"
+        .attr("fill", (nodeData) =>
+          nodeData.completed ? "green" : nodeData.children ? null : "#000"
         )
         .attr("r", 15) // Increase node radius for more spacing
         .attr("class", "node")
         .call(drag(simulation))
-        .on("click", (event, d) => showNodeInfo(event, d))
+        .on("click", (mouseEvent, nodeData) => showNodeInfo(mouseEvent, nodeData))
         .on("mouseover", () => node.style("cursor", "pointer"))
         .on("mouseout", () => node.style("cursor", "default"));
 
@@ -251,10 +261,10 @@ function createForceDirectedGraph(jsonUrl) {
         .data(nodes)
         .enter()
         .append("text")
-        .text((d) => d.code)
+        .text((nodeData) => nodeData.code)
         .attr(
           "font-size",
-          (d) => Math.min(2 * d.r, (2 * d.r - 8) / d.code.length) + "px"
+          (nodeData) => Math.min(2 * nodeData.r, (2 * nodeData.r - 8) / nodeData.code.length) + "px"
         )
         .attr("dy", "2em") // Adjust vertical position of text
         .style("text-anchor", "middle")
@@ -262,26 +272,31 @@ function createForceDirectedGraph(jsonUrl) {
         .style("pointer-events", "none");
 
       // appending node's name to respective node
-      node.append("title").text((d) => d.code);
+      node.append("title").text((nodeData) => nodeData.code);
 
       /***** GRAPH SIMULATION *****/
       // update the link, node, and text pos every tick
       simulation.on("tick", () => {
+        // constantly connect to the two nodes' x and y pos
         link
-          .attr("x1", (d) => d.source.x)
-          .attr("y1", (d) => d.source.y)
-          .attr("x2", (d) => d.target.x)
-          .attr("y2", (d) => d.target.y);
+          .attr("x1", (nodeData) => nodeData.source.x)
+          .attr("y1", (nodeData) => nodeData.source.y)
+          .attr("x2", (nodeData) => nodeData.target.x)
+          .attr("y2", (nodeData) => nodeData.target.y);
 
-        node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+        // dont really know what this does but it was in the d3 docs :)
+        node.attr("cx", (nodeData) => nodeData.x).attr("cy", (nodeData) => nodeData.y);
 
-        nodeText.attr("x", (d) => d.x).attr("y", (d) => d.y);
+        // renders text with respective node
+        nodeText.attr("x", (nodeData) => nodeData.x).attr("y", (nodeData) => nodeData.y);
+
+        // creates bounding box for nodes within defined dimensions
         node
-          .attr("cx", (d) => {
-            return (d.x = Math.max(15, Math.min(width - 15, d.x)));
+          .attr("cx", (nodeData) => {
+            return (nodeData.x = Math.max(15, Math.min(width - 15, nodeData.x)));
           })
-          .attr("cy", (d) => {
-            return (d.y = Math.max(15, Math.min(height - 15, d.y)));
+          .attr("cy", (nodeData) => {
+            return (nodeData.y = Math.max(15, Math.min(height - 15, nodeData.y)));
           });
       });
 
@@ -293,9 +308,14 @@ function createForceDirectedGraph(jsonUrl) {
     })
     .catch((error) => {
       console.error("Error loading JSON:", error);
+
+      // error message for user
+      const statusElement = document.getElementById("status-message");
+      statusElement.textContent = "Error loading JSON data. Please try again later";
     });
 
   /***** POPUP ELEMENT *****/
+  // Defining popup properties
   const popup = d3
     .select("body")
     .append("div")
@@ -307,12 +327,14 @@ function createForceDirectedGraph(jsonUrl) {
     .style("padding", "10px")
     .style("box-shadow", "0 2px 4px rgba(0, 0, 0, 0.2)");
 
+  // Defining name as h2
   const nameInfoElement = popup
     .append("h2")
     .attr("id", "node-info")
     .style("font-family", "monospace")
     .style("white-space", "pre-wrap");
 
+  // Defining description and prerequisites for the main body of the popup
   const descInfoElement = popup
     .append("pre")
     .attr("id", "node-info")
@@ -325,23 +347,23 @@ function createForceDirectedGraph(jsonUrl) {
     .style("font-family", "monospace")
     .style("white-space", "pre-wrap");
 
+  // Event listener and button for closing
   popup.append("button").text("Close").on("click", closePopup);
-  popup.append("button").text("Mark as Completed").on("click", toggleCompletedStatus(d));
 
   /**
    * Grabs name, description, and prereqs from clicked node
    * and displays information in popup
    * 
-   * @param {*} event 
-   * @param {*} d 
+   * @param {*} mouseEvent 
+   * @param {*} nodeData 
    */
-  function showNodeInfo(event, d) {
+  function showNodeInfo(mouseEvent, nodeData) {
   
     //grabbing information from node
-    const nameInfo = d.code;
-    const titleInfo = d.name;
-    const descInfo = JSON.stringify(d.description, null, 2);
-    const prereqInfo = JSON.stringify(d.prerequisites, null, 2);
+    const nameInfo = nodeData.code;
+    const titleInfo = nodeData.name;
+    const descInfo = JSON.stringify(nodeData.description, null, 2);
+    const prereqInfo = JSON.stringify(nodeData.prerequisites, null, 2);
 
     // display the name of the node
     nameInfoElement.text(nameInfo + ": " + titleInfo);
@@ -362,57 +384,21 @@ function createForceDirectedGraph(jsonUrl) {
 
     // Position the popup near mouse click
     popup
-      .style("left", event.pageX + 10 + "px")
-      .style("top", event.pageY + 10 + "px");
+      .style("left", mouseEvent.pageX + 10 + "px")
+      .style("top", mouseEvent.pageY + 10 + "px");
 
-    // Show the popup
+    // Displays the popup
     popup.style("display", "block");
   }
 
-  // Function to toggle the "completed" status of a node
-  function toggleCompletedStatus(d) {
-    d.completed = !d.completed; // Toggle the completed property
-    // Update the node's fill color based on the completed status
-    node.attr("fill", (d) =>
-      d.completed ? "green" : d.children ? null : "#000"
-    );
-  }
-
   /**
-   * Hides the popup when "close" button is pressed */ 
+   * Hides the popup when "close" button is pressed 
+   */ 
   function closePopup() {
     popup.style("display", "none");
   }
 
-  // Function to toggle the completion status of a node
-  function toggleCompletedStatus(node) {
-    node.completed = !node.completed;
-
-    // Update the node's color based on completion status
-    node.color = node.completed ? "green" : node.linkColor || "blue";
-
-    // Update the node's color in the visualization
-    container
-      .selectAll(".node")
-      .filter((d) => d.code === node.code)
-      .attr("fill", (d) => d.color);
-  }
-
-  // Attach click event handler to the "Mark as Completed" button
-  container.selectAll(".mark-completed").on("click", function () {
-    // Get the node associated with the currently opened popup
-    const currentNode = d3.select(this.parentNode).datum();
-    toggleCompletedStatus(currentNode);
-
-    // Close the popup (you may have your own logic for this)
-    closePopup();
-
-    // You can also update the button text based on completion status
-    d3.select(this).text(
-      currentNode.completed ? "Mark as Incomplete" : "Mark as Completed"
-    );
-  });
-
+  /***** POPUP DRAG BEHAVIOR *****/
   // Define the drag behavior for the popup
   const dragPopup = d3
     .drag()
@@ -430,33 +416,32 @@ function createForceDirectedGraph(jsonUrl) {
   /**
    * Labels popup as "active" and allows for window dragging
    *
-   * @param {*} event - drag trigger for popup
+   * @param {*} dragEvent - drag trigger for popup
    */
-
-  function dragstarted(event) {
+  function dragstarted(dragEvent) {
     d3.select(this).raise().classed("active", true);
   }
 
   /**
    * Left and Top corners of popup follow the pointer on drag
    *
-   * @param {*} event - drag trigger for popup
+   * @param {*} dragEvent - drag trigger for popup
    */
-  function dragged(event) {
+  function dragged(dragEvent) {
     d3.select(this)
       .style(
         "left",
-        parseFloat(d3.select(this).style("left")) + event.dx + "px"
+        parseFloat(d3.select(this).style("left")) + dragEvent.dx + "px"
       )
-      .style("top", parseFloat(d3.select(this).style("top")) + event.dy + "px");
+      .style("top", parseFloat(d3.select(this).style("top")) + dragEvent.dy + "px");
   }
 
   /**
    * Disables dragging by removing the "active" class
    *
-   * @param {*} event - drag trigger for popup
+   * @param {*} dragEvent - drag trigger for popup
    */
-  function dragended(event) {
+  function dragended(dragEvent) {
     d3.select(this).classed("active", false);
   }
 }
