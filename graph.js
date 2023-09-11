@@ -126,17 +126,17 @@ function createForceDirectedGraph(jsonUrl) {
 
   /***** CREATING MAIN PARENT SVG *****/
   // initial dimensions
-  const width = 5000;
-  const height = 5000;
+  const width = 3000;
+  const height = 3000;
   // modify this value to change the zoom scale
-  const initialZoomScale = 5; // HACK: should be based on the size of the graph
+  const initialZoomScale = 2; // HACK: should be based on the size of the graph
   let currentDisplayedNode = null;
   let node, links;
 
   const svg = d3
     .create("svg")
-    .attr("width", "100%")
-    .attr("height", "100%")
+    .attr("width", "80%")
+    .attr("height", "80%")
     .attr("id", "graph")
     .attr("viewBox", `0 0 ${width} ${height}`);
 
@@ -180,7 +180,7 @@ function createForceDirectedGraph(jsonUrl) {
       [0, 0],
       [width, height],
     ])
-    .scaleExtent([1, 10])
+    .scaleExtent([1, 50])
     .on("zoom", zoomed);
 
   svg.call(zoom);

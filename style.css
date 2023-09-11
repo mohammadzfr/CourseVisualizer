@@ -2,13 +2,31 @@
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
 }
-#graph-container {
+
+h2 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#graph-container{
+    display: flex;
+    align-items: center;
     overflow: hidden;
     background-color: #F8F8FF;
     border: 1px solid black;
     border-radius: 10px;
-    width: 100%;
-}
+    width: 50%;
+    max-width: 1000px;
+    /* min-width: 300px;
+    max-height: 800px;
+    margin: 8px;
+} */
 
 #node-popup {
     position: absolute;
@@ -17,15 +35,15 @@
     border-radius: 8px;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
     max-width: 300px;
 }
 
-#node-info {
+#node-info > *{
   font-family: monospace;
-  white-space: pre-wrap;
+  
 }
 
-#graph {
+g {
   border: 1px solid red;
 }
-

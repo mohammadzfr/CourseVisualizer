@@ -20,7 +20,7 @@ This project displays course `codes`, `names`, `descriptions`, and `prerequisite
 
 2. If you have a JSON file that only has nodes and no links between them, you can create links for it by using the `process_data.js` file, which will use the `prerequisites` field to create links
     - I recommend downloading and using **[bun](https://bun.sh/)** to run the js file
-    - After downloading, use `bun process_data.js` in the `src` directory
+    - After downloading, use `bun process_data.js` in the `CourseVisualizer` directory
 
 3. Enter the PATH of your compatible JSON file into the `jsonUrl` variable in `graph.js`
 
@@ -29,8 +29,8 @@ This project displays course `codes`, `names`, `descriptions`, and `prerequisite
 
 ## Project Overview
 ```
-src
-|── Assets
+CourseVisualizer/
+|── assets/
 |   |── signature.ico (favicon)
 |   |── CourseVisThumbnail.png (thumbnail for README)
 |
