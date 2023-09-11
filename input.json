@@ -24,7 +24,7 @@
     {
       "code": "CS 110",
       "name": "Programming and Problem Solving",
-      "description": "An introduction to problem-solving techniques...",
+      "description": "An introduction to problem-solving techniques, the fundamental concepts of programming, and the software design process. Topics will include: data types, control structures, scope rules, functions, files, and the mechanics of running, testing and debugging. Problems will be drawn from various science disciplines. *Note: CS majors who have mastered the course material in CS 110 through other means are eligible to write the CS 110 bypass exam.*",
       "prerequisites": [],
       "linkColor": "green",
       "completed": false
@@ -32,7 +32,7 @@
     {
       "code": "CS 115",
       "name": "Object-Oriented Design",
-      "description": "This course focuses on the concepts of object-oriented programming...",
+      "description": "This course focuses on the concepts of object-oriented programming. Topics include data abstraction, classes, composition and inheritance, subtyping, dynamic binding, polymorphism and dynamic memory management. Other topics include type systems, two-dimensional arrays, records, references, searching and sorting algorithms, language translation. Software engineering: comprehensibility, correctness, efficiency, refactoring.",
       "prerequisites": ["CS 110", "MATH 110"],
       "linkColor": "green",
       "completed": false
@@ -40,7 +40,7 @@
     {
       "code": "CS 201",
       "name": "Introduction to Digital Systems",
-      "description": "Hardware paradigms, logic minimization, sequential and combinational circuits...",
+      "description": "Hardware paradigms, logic minimization, sequential and combinational circuits, register transfer notation. Numerical data representation, number bases, floating-point and two’s-complement representation, representation of non-numeric data, records and arrays. Von Neumann architecture, control units, instruction sets, assembly language programming, addressing modes, subroutines, basic building blocks, computer components.",
       "prerequisites": ["CS 110"],
       "linkColor": "green",
       "completed": false
@@ -56,7 +56,7 @@
     {
       "code": "CS 215",
       "name": "Web and Database Programming",
-      "description": "This course shows how interactive database-driven web applications are designed and implemented...",
+      "description": "This course introduces data abstraction, data structures and their implementations, the basics of algorithmic analysis, and the fundamental computing algorithms. Topics include stacks, queues, heaps, recursion, Master Theorem, asymptotic notation, computational complexity, empirical performance measurement, recursion based sorting algorithms, hashing, and trees (including binary trees, B-trees, and AVL trees).",
       "prerequisites": ["CS 210"],
       "linkColor": "green",
       "completed": false
@@ -64,7 +64,7 @@
     {
       "code": "CS 280",
       "name": "Risk and Reward in the Information Society",
-      "description": "Social context of computing. Case study: human-computer interfaces and their evaluation...",
+      "description": "Social context of computing. Case study: human-computer interfaces and their evaluation. Methods and tools of analysis. Professional and ethical responsibilities. Risks and liabilities of computer-based systems. Intellectual property, privacy and civil liberties. Professional communication. Sustainability. Cybercrime.",
       "prerequisites": ["ENGL 100", "CS 110"],
       "linkColor": "green",
       "completed": false
@@ -72,7 +72,7 @@
     {
       "code": "CS 301",
       "name": "Digital Systems Architecture",
-      "description": "Latency and bandwidth, cache memory, virtual memory, data compression...",
+      "description": "Latency and bandwidth, cache memory, virtual memory, data compression, fault handling. Fundamentals of I/O, interrupts, external storage, buses, networks, multimedia support. Multiprocessor and parallel architectures, parallel decomposition, pipelining, shared memory systems, interconnection networks, cache consistency, memory consistency. Computational paradigms, performance evaluation, and effect of proximity.",
       "prerequisites": ["CS 201"],
       "linkColor": "green",
       "completed": false
@@ -103,7 +103,7 @@
     },
     {
       "code": "CS 340",
-      "name": "Advanced Data Structures and Algorithm Desig",
+      "name": "Advanced Data Structures and Algorithm Design",
       "description": "Fundamental algorithms: depth- and breadth-first traversals, pattern matching, and graph algorithms. Algorithmic strategies: brute-force, greedy, divide-and-conquer, backtracking, branch-and-bound, dynamic programming, and randomized. Algorithm analysis, complexity theory, performance evaluation. Parallelism: fundamentals, algorithms, communication.",
       "prerequisites": ["CS 210"],
       "linkColor": "green",
@@ -188,25 +188,25 @@
     },
     {
       "code": "ENEL 280",
-      "name": "",
-      "description": "",
-      "prerequisites": [],
+      "name": "Electrical Circuits",
+      "description": "DC circuits, Kirchoff's voltage and current laws, equivalent circuits, introduction to mesh and nodal methods, superposition, maximum power transfer, capacitors, inductors, transient analysis of RL and RC circuits, introduction to AC steady state analysis, introduction to electrical safety in engineering.",
+      "prerequisites": ["Math 111"],
       "linkColor": "green",
       "completed": false
     },
     {
       "code": "ENEL 282",
-      "name": "",
-      "description": "",
-      "prerequisites": [],
+      "name": "Semiconductor Devices",
+      "description": "Semiconductor materials and conduction principles. The characteristics of common semiconductor devices, including: PN junction diodes, bipolar and field effect transistors, thyristors and photodiodes. Linear models, circuit analysis and application examples.",
+      "prerequisites": ["ENEL 280"],
       "linkColor": "green",
       "completed": false
     },
     {
       "code": "ENEL 384",
-      "name": "",
-      "description": "",
-      "prerequisites": [],
+      "name": "Digital Electronics",
+      "description": "The introductory aspects of digital electronic circuits, including basic principles of digital systems, logic function and gates, boolean algebra and combinational logic, introduction to VHDL, introduction to FPGAs, combinational logic functions, digital arithmetic and arithmetic circuits, introduction to sequential logic, counters and shift registers, and state machine design.",
+      "prerequisites": ["ENEL 282"],
       "linkColor": "green",
       "completed": false
     },
@@ -220,90 +220,95 @@
     },
     {
       "code": "ENGL 100",
-      "name": "Skills for Science Students",
-      "description": "",
+      "name": "Critical Reading and Writing I",
+      "description": "This course develops students' proficiency in critical reading and writing through the study of a wide range of non-literary and literary texts, and the study of composition, with emphasis on connections between modes of reading and writing. *Note: Students who are planning to repeat ENGL 100 should seek academic advising before doing so*",
       "linkColor": "blue",
       "completed": false
     },
     {
       "code": "ENGL 110",
-      "name": "Skills for Science Students",
-      "description": "",
+      "name": "Critical Reading and Writing II",
+      "description": "A study of a special topic in literature, which may include non-literary texts, in conjunction with a continuation of the writing program begun in ENGL 100. *Note: Every section of ENGL 110 has a different focus. Please consult the Department's Supplementary Calendar or the list of current course offerings on the Departmental website.* *Note: Students who fail ENGL 110 twice should contact their faculty or their federated college immediately.*",
+      "prerequisites": ["ENGL 100"],
       "linkColor": "blue",
       "completed": false
     },
     {
       "code": "MATH 110",
-      "name": "",
-      "description": "",
+      "name": "Calculus I",
+      "description": "An introductory class in the theory and techniques of differentiation and integration of algebraic and trigonometric functions. Topics include limits, optimization, curve sketching, and areas. *Note: Students can receive credit for only one of MATH 103 or 110*",
       "prerequisites": [],
       "linkColor": "red",
       "completed": false
     },
     {
       "code": "MATH 111",
-      "name": "",
-      "description": "",
-      "prerequisites": [],
+      "name": "Calculus II",
+      "description": "Differentiation and integration of exponential and logarithmic functions; methods of integration and applications; indeterminate forms, L'Hospital's rule and improper integrals; sequences, series, power series and Taylor series.",
+      "prerequisites": ["MATH 110"],
       "linkColor": "red",
       "completed": false
     },
     {
       "code": "MATH 122",
-      "name": "",
-      "description": "",
+      "name": "Linear Algebra I",
+      "description": "A course intended to introduce students to elementary linear algebra, particularly at a computational and applied level. Topics include matrices and systems of equations, inversion, determinants, vectors, inner products, eigenvectors and eigenvalues.",
       "prerequisites": [],
       "linkColor": "red",
       "completed": false
     },
     {
       "code": "MATH 221",
-      "name": "",
-      "description": "",
+      "name": "Introduction to Proofs and Problem Solving",
+      "description": "An introductory course intended to familiarize students with mathematical reasoning and proof techniques, including direct reasoning, indirect reasoning, and mathematical induction. Topics include elementary number theory, logic, sets, functions, and relations. ***Prerequisite: Two university math courses beyond MATH 102.***",
       "prerequisites": [],
       "linkColor": "red",
       "completed": false
     },
     {
       "code": "STAT 160",
-      "name": "",
-      "description": "",
+      "name": "Introductory Statistics",
+      "description": "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics. *Note: STAT 160 is designed to provide a comprehensive single semester introduction to statistical techniques and is intended for students majoring in statistics, actuarial science, or any other program requiring a detailed knowledge of statistics. Students who receive credit for STAT 160 may not receive credit for STAT 100 or STAT 200*",
       "prerequisites": [],
       "linkColor": "blue",
       "completed": false
     },
     {
       "code": "PHYS 109",
-      "name": "",
-      "description": "",
+      "name": "General Physics I",
+      "description": "General algebra-based physics, including classical mechanics and geometrical optics. * Note: May not be taken for credit if a student has received credit for PHYS 111 or PHYS 112. Students cannot receive credit for both PHYS 105 and PHYS 109. *",
+      "prerequisites": [],
       "linkColor": "blue",
       "completed": false
     },
     {
       "code": "PHYS 119",
-      "name": "",
-      "description": "",
+      "name": "General Physics II",
+      "description": "A continuation of PHYS 109: Fluid mechanics, heat and thermodynamics, waves, sound, radiation, electrostatics and electric current. *Note: Phys 119 may not be taken for credit if a student has previously received credit for Phys 111 or Phys 112*",
+      "prerequisites": ["PHYS 109"],
       "linkColor": "blue",
       "completed": false
     },
     {
       "code": "PHYS 111",
-      "name": "",
-      "description": "",
+      "name": "Mechanics",
+      "description": "Kinematics in one, two and three dimensions, dynamics of particles and rigid bodies, including work, energy, and rotational kinematics and dynamics.",
+      "prerequisites": ["MATH 110"],
       "linkColor": "blue",
       "completed": false
     },
     {
       "code": "PHYS 112",
-      "name": "",
-      "description": "",
+      "name": "Waves and Optics",
+      "description": "A course dealing with oscillations, wave motion, sound and geometrical and physical optics.",
+      "prerequisites": ["PHYS 111", "MATH 110"],
       "linkColor": "blue",
       "completed": false
     },
     {
       "code": "STAT 200",
-      "name": "",
-      "description": "",
+      "name": "Intermediate Statistics for Applications",
+      "description": "A continuation of STAT 100; inference for two categorical variables; basic multiple linear regression; two-way analysis of variance; introduction to nonparametric methods; statistical process control; introduction to survey design. *Note: STAT 100 and STAT 200 are designed to provide a year-long introduction to statistical methodology with a view towards applications and are not intended for majors in statistics, actuarial science, or any other program requiring a detailed knowledge of statistics. Students who receive credit for STAT 200 may not receive credit for STAT 160*",
       "prerequisites": [],
       "linkColor": "blue",
       "completed": false

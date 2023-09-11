@@ -24,7 +24,7 @@ function saveJSONToFile(filePath, jsonData) {
 }
 
 // Load the nodes from a JSON file asynchronously
-let jsonFilePath = 'copy.json';
+let jsonFilePath = 'input.json';
 
 // Function to generate links based on prerequisites
 function generateLinks(courseNodes) {
@@ -77,7 +77,7 @@ function takeInput() {
 // Main function to process and generate JSON
 async function main() {
   try {
-    takeInput();
+    // takeInput();
 
     // Load course nodes from the JSON file
     const courseNodes = loadJSONFromFile(jsonFilePath);
