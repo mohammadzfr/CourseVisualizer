@@ -135,8 +135,8 @@ function createForceDirectedGraph(jsonUrl) {
 
   const svg = d3
     .create("svg")
-    .attr("width", "80%")
-    .attr("height", "80%")
+    .attr("width", "100%")
+    .attr("height", "100%")
     .attr("id", "graph")
     .attr("viewBox", `0 0 ${width} ${height}`);
 
@@ -354,7 +354,7 @@ function createForceDirectedGraph(jsonUrl) {
       });
 
       // append graph to DOM (graph-container)
-      document.getElementById("graph-container").appendChild(svg.node());
+      document.getElementById("svg-container").appendChild(svg.node());
 
       // Call handleResize initially to set the SVG dimensions
       handleResize();
