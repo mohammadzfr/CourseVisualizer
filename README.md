@@ -2,7 +2,7 @@
 
 Display your college courses as an easy-to-understand **interactive graph**!
 
-![Thumbnail](src/assets/CourseVisThumbnail.png)
+![Thumbnail](assets/CourseVisThumbnail.png)
 
 This project displays course `codes`, `names`, `descriptions`, and `prerequisites` as a **force-directed graph** using [D3.js](https://d3js.org/)
 
