@@ -48,7 +48,7 @@
     {
       "code": "CS 210",
       "name": "Data Structures and Abstractions",
-      "description": "This course introduces data abstraction, data structures and their implementations...",
+      "description": "This course introduces data abstraction, data structures and their implementations, the basics of algorithmic analysis, and the fundamental computing algorithms. Topics include stacks, queues, heaps, recursion, 44Course Catalogue Master Theorem, asymptotic notation, computational complexity, empirical performance measurement, recursion based sorting algorithms, hashing, and trees (including binary trees, B-trees, and AVL trees).",
       "prerequisites": ["CS 115", "MATH 110"],
       "linkColor": "green",
       "completed": false
