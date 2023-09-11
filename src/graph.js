@@ -8,6 +8,36 @@
  * Date: 09/10/2023
  */
 
+const colorPalette = {
+  nodeColors: {
+    blue: "#3498db",
+    green: "#2ecc71",
+    red: "#e74c3c",
+    yellow: "#f1c40f",
+    purple: "#9b59b6",
+    orange: "#e67e22",
+    teal: "#1abc9c",
+    gray: "#95a5a6",
+    darkBlue: "#2980b9",
+    darkGreen: "#27ae60",
+    darkRed: "#c0392b",
+    darkYellow: "#f39c12",
+    darkPurple: "#8e44ad",
+    darkOrange: "#d35400",
+    darkTeal: "#16a085",
+    darkGray: "#7f8c8d",
+  },
+  linkColors: {
+    normal: "#95a5a6",
+    highlighted: "#3498db",
+    completed: "#2ecc71",
+  },
+};
+
+// Example usage:
+const nodeColor = colorPalette.nodeColors.blue;
+const linkColor = colorPalette.linkColors.normal;
+
 /***** DRAG FUNCTIONALITY *****/
 // defines the drag simulation for nodes
 const drag = (simulation) => {
@@ -121,7 +151,7 @@ function createForceDirectedGraph(jsonUrl) {
     .attr("y2", height / 2)
     .attr("stroke", "gray")
     .attr("stroke-width", 5)
-    .attr("stroke-dasharray", "4,4");
+    .attr("stroke-dasharray", "20,10");
 
   container
     .append("line")
@@ -131,7 +161,7 @@ function createForceDirectedGraph(jsonUrl) {
     .attr("y2", height)
     .attr("stroke", "gray")
     .attr("stroke-width", 5)
-    .attr("stroke-dasharray", "4,4");
+    .attr("stroke-dasharray", "20,10");
 
   /***** ZOOM BEHAVIOR *****/
 
@@ -212,7 +242,7 @@ function createForceDirectedGraph(jsonUrl) {
         .force("charge", d3.forceManyBody().strength(-2000)) // Increase charge for more spacing
         .force("x", d3.forceX(width / 2).strength(0.1)) // HACK: pushes out of corner
         .force("y", d3.forceY(height / 2).strength(0.1)) // HACK: pushes out of corner
-        .force("collision", d3.forceCollide().radius(15)); // Prevent node overlap
+        .force("collision", d3.forceCollide().radius(25)); // Prevent node overlap
 
       // HACK: Creates copy of links to switch the target and source
       //       This is done to flip the arrowheads since they follow
@@ -235,7 +265,7 @@ function createForceDirectedGraph(jsonUrl) {
         .join("line")
         .attr("stroke-width", 2)
         .attr("stroke", (nodeData) => nodeData.source.linkColor || "#999") // Set the link color based on the source node's linkColor property
-        .attr("stroke-dasharray", "4,4") // Set the stroke-dasharray to create dotted lines
+        // .attr("stroke-dasharray", "4,4") // Set the stroke-dasharray to create dotted lines
         .attr("marker-end", (nodeData) => {
           // Dynamically set the marker-end based on linkColor property
           console.log(nodeData.source.linkColor);
@@ -246,12 +276,12 @@ function createForceDirectedGraph(jsonUrl) {
       node = container // HACK: should be declared locally but toggleCompletion function can't access properly
         .append("g")
         .attr("fill", "#fff")
-        .attr("stroke", "#000")
-        .attr("stroke-width", 2)
+        .attr("stroke", "#010002")
+        .attr("stroke-width", 1.5)
         .selectAll("circle")
         .data(nodes)
         .join("circle")
-        .attr("fill", (nodeData) => (nodeData.completed ? "green" : "#000"))
+        .attr("fill", (nodeData) => (nodeData.completed ? colorPalette.nodeColors.green : colorPalette.nodeColors.blue))
         .attr("r", 15) // Increase node radius for more spacing
         .attr("class", "node")
         .attr("data-code", (nodeData) => nodeData.code)
@@ -335,7 +365,7 @@ function createForceDirectedGraph(jsonUrl) {
       // error message for user
       const statusElement = document.getElementById("status-message");
       statusElement.textContent =
-        "Error loading JSON data. Please try again later";
+        "Error loading JSON data. Please make sure the proper file is loaded";
     });
 
   /***** POPUP ELEMENT *****/
@@ -381,7 +411,7 @@ function createForceDirectedGraph(jsonUrl) {
   popup
     .append("button")
     .text("Mark as Completed")
-    .on("click", (mouseEvent) => toggleCompletion(mouseEvent));
+    .on("click", (mouseEvent) => toggleCompletion(mouseEvent.target));
 
   /**
    * Grabs name, description, and prereqs from clicked node
@@ -442,14 +472,14 @@ function createForceDirectedGraph(jsonUrl) {
     if (selectedNode) {
       selectedNode.completed = !selectedNode.completed;
 
-      // Update the button text
-      mouseEvent.button.textContent = selectedNode.completed
-        ? "Mark as Incomplete"
-        : "Mark as Completed";
+      // Update button text based on completed state
+      mouseEvent.textContent = selectedNode.completed
+        ? "Mark as Incompleted"
+        : "Mark as Completed"
 
       // Update the node color based on completion status
       node.attr("fill", (d) =>
-        d.completed ? "green" : d.children ? null : "#000"
+        d.completed ? colorPalette.nodeColors.green : d.children ? null : colorPalette.nodeColors.blue
       );
     }
   }
@@ -506,7 +536,7 @@ function createForceDirectedGraph(jsonUrl) {
 }
 
 // CHANGE THIS WITH THE APPROPRIATE JSON FILE
-const jsonUrl = "./final.json";
+const jsonUrl = "./example.json";
 
 // Allows the magic to happen :)
 createForceDirectedGraph(jsonUrl);

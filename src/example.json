@@ -1,0 +1,462 @@
+{
+
+    "nodes": [
+      {
+        "code": "SCI 099",
+        "name": "Skills for Science Students",
+        "description": "",
+        "linkColor": "blue",
+        "completed": true
+      },
+      {
+        "code": "BUS 260",
+        "name": "Introduction to Organizational Behaviour",
+        "description": "This introductory course addresses the basic concepts and processes of organizational behaviour. Topics will include: individual level variables, such as perception, personality, attitudes, and motivation; interpersonal and group processes, such as communication, teams, leadership, and power; and, organizational level factors such as organizational design, culture, and change.\n*Note: Students may not receive credit for both BUS 260 and ADMN 260.*",
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "BUS 302",
+        "name": "Entrepreneurship: Small Business Modeling and Feasibility Analysis",
+        "description": "This course addresses early stage elements of starting up and operating a small business on a conceptual level. Using cases, competitions and experiential exercises, students will learn opportunity alertness and identification, building a value proposition, testing business hypotheses, creating competitive advantage, setting up financials, analyzing break even, charting growth and planning for exit. Students develop, build and test an entrepreneurial opportunity they identify, and assess its feasibility. The course applies to all business start up including non profit, for profit, for benefit and corporate or institutional intrapreneurship.\n**Prerequisite: Completion of a minimum of 30 credit hours of university studies.***\n*Note: Students may only receive credit for one of BUS 302, ADMN 302, and ENGG 436.*",
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "CS 110",
+        "name": "Programming and Problem Solving",
+        "description": "An introduction to problem-solving techniques...",
+        "prerequisites": [],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 115",
+        "name": "Object-Oriented Design",
+        "description": "This course focuses on the concepts of object-oriented programming...",
+        "prerequisites": [
+          "CS 110",
+          "MATH 110"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 201",
+        "name": "Introduction to Digital Systems",
+        "description": "Hardware paradigms, logic minimization, sequential and combinational circuits...",
+        "prerequisites": [
+          "CS 110"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 210",
+        "name": "Data Structures and Abstractions",
+        "description": "This course introduces data abstraction, data structures and their implementations...",
+        "prerequisites": [
+          "CS 115",
+          "MATH 110"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 215",
+        "name": "Web and Database Programming",
+        "description": "This course shows how interactive database-driven web applications are designed and implemented...",
+        "prerequisites": [
+          "CS 210"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 280",
+        "name": "Risk and Reward in the Information Society",
+        "description": "Social context of computing. Case study: human-computer interfaces and their evaluation...",
+        "prerequisites": [
+          "ENGL 100",
+          "CS 110"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 301",
+        "name": "Digital Systems Architecture",
+        "description": "Latency and bandwidth, cache memory, virtual memory, data compression...",
+        "prerequisites": [
+          "CS 201"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 310",
+        "name": "Discrete Computational Structures",
+        "description": "Finite and discrete algebraic structures relating to computers; sets, functions, relations. Machine-oriented logic. Combinatorial problems and algorithms. Finite automata and formal language theory.",
+        "prerequisites": [
+          "MATH 110",
+          "MATH 122",
+          "MATH 221",
+          "CS 210"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 330",
+        "name": "Introduction to Operating Systems",
+        "description": "Overview of operating systems: functionality, and design issues. Operating system principles: structures, abstractions, APIs, resource allocation, proximity, virtualization. Concurrency: process state, context switches, process communication, synchronization. Scheduling: preemption, schedulers, processes, and threads. Memory management. Security and protection. File systems. User interface. Distributed algorithms: consensus, termination, and fault tolerance.",
+        "prerequisites": [
+          "CS 210"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 335",
+        "name": "Computer Networks",
+        "description": "Network architectures and protocols, networked applications, reliable data delivery, routing and forwarding, local area networks, resource allocation, mobility, reliability through redundancy. Security: secure design, defensive programming, threats and attacks, network security, cryptography.",
+        "prerequisites": [
+          "CS 210",
+          "STAT 160"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 340",
+        "name": "Advanced Data Structures and Algorithm Desig",
+        "description": "Fundamental algorithms: depth- and breadth-first traversals, pattern matching, and graph algorithms. Algorithmic strategies: brute-force, greedy, divide-and-conquer, backtracking, branch-and-bound, dynamic programming, and randomized. Algorithm analysis, complexity theory, performance evaluation. Parallelism: fundamentals, algorithms, communication.",
+        "prerequisites": [
+          "CS 210"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 350",
+        "name": "Programming Language Concepts",
+        "description": "Programming language genealogy and design. Imperative, functional, and object-oriented language paradigms. Context-free grammars and syntax trees. Data types, control structures, exception handling, data abstraction, information hiding, and non-determinism. Program representation, translation, and execution. Functional programming: advantages, constructs, closures, and higher-order operations. Parallel programming.",
+        "prerequisites": [
+          "CS 210"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 372",
+        "name": "Software Engineering Methodology",
+        "description": "Fundamental principles of designing programs and developing large software systems that meet specifications and that are safe, secure, reliable and maintainable. Software process models, software project management, requirements engineering, software design, software construction, software verification and validation, software tools and environments, software evolution, software reliability.",
+        "prerequisites": [
+          "CS 215"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 411",
+        "name": "Computability and Formal Languages",
+        "description": "The notion of effective procedure and Turing machine. The universal Turing machine. Nondeterministic Turing machine. Recursive functions and other computable functions. The halting problem and unsolvability. Grammar and formal language. Finite automata and regular grammars. Context-free grammars and push-down automata. Post correspondence problem. The Chomsky hierarchy of languages and context-sensitive language.",
+        "prerequisites": [
+          "CS 310"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 412",
+        "name": "Algorithm Analysis",
+        "description": "A formal algorithmic language. Measures of complexity for time and space. Worst-case, average-case, and best-case analysis. Lower and upper bounds of algorithms (techniques include comparison trees, adversary arguments, and reduction). P and NP classes. NP-hardness and NP- completeness. Introduction to parallel computational models and algorithms.",
+        "prerequisites": [
+          "CS 310",
+          "CS 340"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 428",
+        "name": "Human Computer Communications",
+        "description": "This course stresses the importance of good interfaces and the relationship of user interface design to human-computer interaction. Other topics include: interface quality and methods of evaluation; interface design examples; dimensions of interface variability; dialogue genre; dialogue tools and techniques; user-centered design and task analysis; prototyping and the iterative design cycle; user interface implementation; prototyping tools and environments; I/O devices; basic computer graphics; color and sound.\n*Note: Students may not receive credit for more than one of CS 305 and CS 428*",
+        "prerequisites": [
+          "CS 215",
+          "CS 280"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 473",
+        "name": "Management Support Systems",
+        "description": "Strategic and tactical rewards resulting from the effective use of corporate information systems will be presented. Topics include techniques and tools for developing management support systems. Case studies on development and use of the systems will be discussed.",
+        "prerequisites": [
+          "CS 372"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "CS 476",
+        "name": "Software Development Project",
+        "description": "Software development projects following all the phases of the software process. Project planning and scheduling. Surveys on architectural styles, design patterns and components. Semester-long group projects with real- world applications. Projects will be integrative, require evaluation of potential solutions, and require work on a larger scale than typical course projects.",
+        "prerequisites": [
+          "CS 372"
+        ],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "ECON 100",
+        "name": "Introduction to Economic Issues",
+        "description": "Basic economic concepts are used to explore current economic issues such as unemployment, inflation, trade disputes, the crisis in agriculture, pollution reduction, and health care.\n*Note: Students who have received credit for either ECON 201 or 202, or any ECON course numbered 300 or higher may not take ECON 100 for credit.*",
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "ECON 201",
+        "name": "Introductory Microeconomics",
+        "description": "Theory of how individual consumers and firms behave in a market economy. Emphasis is on evaluating how well markets deliver efficient and fair outcomes.\n***Prerequisite: 15 credit hours or ECON 100 or Pre-Calculus 20 (or equivalent)***\n*Note: Students who have already received credit for both ECON 201 and ECON 301 may not retake ECON 201 for credit.*",
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "ECON 202",
+        "name": "Introductory Macroeconomics",
+        "description": "Basic economic concepts are used to explain how economies operate at a national or regional level, with a focus on production, income, interest rates, prices, inflation, and unemployment. Principles are introduced for understanding and evaluating the methods by which governments can smooth fluctuations in overall economic activity.\n***Prerequisite: 15 credit hours or ECON 100 or Pre-Calculus 20 (or equivalent) ***\n*Note: Students who have already received credit for both ECON 202 and ECON 302 may not retake ECON 202 for credit.*",
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "ENEL 280",
+        "name": "",
+        "description": "",
+        "prerequisites": [],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "ENEL 282",
+        "name": "",
+        "description": "",
+        "prerequisites": [],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "ENEL 384",
+        "name": "",
+        "description": "",
+        "prerequisites": [],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "ENEL 387",
+        "name": "",
+        "description": "",
+        "prerequisites": [],
+        "linkColor": "green",
+        "completed": false
+      },
+      {
+        "code": "ENGL 100",
+        "name": "Skills for Science Students",
+        "description": "",
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "ENGL 110",
+        "name": "Skills for Science Students",
+        "description": "",
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "MATH 110",
+        "name": "",
+        "description": "",
+        "prerequisites": [],
+        "linkColor": "red",
+        "completed": false
+      },
+      {
+        "code": "MATH 111",
+        "name": "",
+        "description": "",
+        "prerequisites": [],
+        "linkColor": "red",
+        "completed": false
+      },
+      {
+        "code": "MATH 122",
+        "name": "",
+        "description": "",
+        "prerequisites": [],
+        "linkColor": "red",
+        "completed": false
+      },
+      {
+        "code": "MATH 221",
+        "name": "",
+        "description": "",
+        "prerequisites": [],
+        "linkColor": "red",
+        "completed": false
+      },
+      {
+        "code": "STAT 160",
+        "name": "",
+        "description": "",
+        "prerequisites": [],
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "PHYS 109",
+        "name": "",
+        "description": "",
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "PHYS 119",
+        "name": "",
+        "description": "",
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "PHYS 111",
+        "name": "",
+        "description": "",
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "PHYS 112",
+        "name": "",
+        "description": "",
+        "linkColor": "blue",
+        "completed": false
+      },
+      {
+        "code": "STAT 200",
+        "name": "",
+        "description": "",
+        "prerequisites": [],
+        "linkColor": "blue",
+        "completed": false
+      }
+    ],
+  "links": [
+    {
+      "source": "CS 115",
+      "target": "CS 110"
+    },
+    {
+      "source": "CS 115",
+      "target": "MATH 110"
+    },
+    {
+      "source": "CS 201",
+      "target": "CS 110"
+    },
+    {
+      "source": "CS 210",
+      "target": "CS 115"
+    },
+    {
+      "source": "CS 210",
+      "target": "MATH 110"
+    },
+    {
+      "source": "CS 215",
+      "target": "CS 210"
+    },
+    {
+      "source": "CS 280",
+      "target": "ENGL 100"
+    },
+    {
+      "source": "CS 280",
+      "target": "CS 110"
+    },
+    {
+      "source": "CS 301",
+      "target": "CS 201"
+    },
+    {
+      "source": "CS 310",
+      "target": "MATH 110"
+    },
+    {
+      "source": "CS 310",
+      "target": "MATH 122"
+    },
+    {
+      "source": "CS 310",
+      "target": "MATH 221"
+    },
+    {
+      "source": "CS 310",
+      "target": "CS 210"
+    },
+    {
+      "source": "CS 330",
+      "target": "CS 210"
+    },
+    {
+      "source": "CS 335",
+      "target": "CS 210"
+    },
+    {
+      "source": "CS 335",
+      "target": "STAT 160"
+    },
+    {
+      "source": "CS 340",
+      "target": "CS 210"
+    },
+    {
+      "source": "CS 350",
+      "target": "CS 210"
+    },
+    {
+      "source": "CS 372",
+      "target": "CS 215"
+    },
+    {
+      "source": "CS 411",
+      "target": "CS 310"
+    },
+    {
+      "source": "CS 412",
+      "target": "CS 310"
+    },
+    {
+      "source": "CS 412",
+      "target": "CS 340"
+    },
+    {
+      "source": "CS 428",
+      "target": "CS 215"
+    },
+    {
+      "source": "CS 428",
+      "target": "CS 280"
+    },
+    {
+      "source": "CS 473",
+      "target": "CS 372"
+    },
+    {
+      "source": "CS 476",
+      "target": "CS 372"
+    }
+  ]
+}

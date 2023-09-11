@@ -1,5 +1,10 @@
+* {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
 #graph-container {
     overflow: hidden;
+    background-color: #F8F8FF;
     border: 1px solid black;
     border-radius: 10px;
     width: 100%;
