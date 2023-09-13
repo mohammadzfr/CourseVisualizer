@@ -578,7 +578,7 @@ function courseSelect(file, mouseEvent) {
   // Get the existing graph container
   const svgContainer = document.getElementById("svg-container");
   let displayed = document.querySelector(".program-displayed");
-  displayed.innerHTML = "<u>Displayed Program:<u> " + file;
+  displayed.innerHTML = "<u>Displayed Program:</u> " + file;
   // content.appendChild(displayed);
   // Remove all child nodes (i.e., the existing graph)
   while (svgContainer.firstChild) {
