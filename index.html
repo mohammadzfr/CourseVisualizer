@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Tree Vis</title>
     <link rel="icon" type="image/x-icon" href="./assets/signature.ico">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
+
 <body>
     <div class="content">
         <h1>Course Tree Visualizer</h1>
         <p>Drag it around, zoom in or out, click on nodes for more info, and have fun with it!</p>
-        <h2><u>Displayed Program:</u> BSc Software Systems Development</h2>
-    </div>
+        <h2 class="program-displayed"><u>Displayed Program:</u> ./example.json</h2>
+
+        <div class="dropdown">
+            <button class="dropbtn">
+                Select Program
+                <i class="fa fa-chevron-down"></i>
+            </button>
+            <div id="course-dropdown"></div>
+        </div>
+
+        <button onclick="toggleGrid()" class="toggle-grid">Toggle Grid</button>
+
+
         <div id="graph-container">
             <div id="node-popup" style="display: none;">
             </div>
@@ -24,24 +39,11 @@
             <div id="svg-container">
 
             </div>
-            
+
         </div>
-    
 
+    </div>
     <script src="graph.js"></script>
-    <!-- <script>
-        // JavaScript code to calculate and set container dimensions
-        function setContainerDimensions() {
-            const container = document.getElementById('svg-container');
-            const aspectRatio = 16 / 9; // Adjust to your desired aspect ratio
-            const containerWidth = container.offsetWidth;
-            const containerHeight = containerWidth / aspectRatio;
-            container.style.height = containerHeight + 'px';
-        }
-
-        // Call the function when the page loads and when it's resized
-        window.addEventListener('load', setContainerDimensions);
-        window.addEventListener('resize', setContainerDimensions);
-    </script> -->
 </body>
+
 </html>

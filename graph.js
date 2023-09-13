@@ -51,7 +51,7 @@ const drag = (simulation) => {
     if (!dragEvent.active) simulation.alphaTarget(0.3).restart();
     nodeData.fx = nodeData.x;
     nodeData.fy = nodeData.y;
-    console.log(dragEvent);
+    // console.log(dragEvent);
   }
 
   /**
@@ -151,7 +151,8 @@ function createForceDirectedGraph(jsonUrl) {
     .attr("y2", height / 2)
     .attr("stroke", "gray")
     .attr("stroke-width", 5)
-    .attr("stroke-dasharray", "20,10");
+    .attr("stroke-dasharray", "20,10")
+    .classed("grid-class", true);
 
   container
     .append("line")
@@ -161,7 +162,19 @@ function createForceDirectedGraph(jsonUrl) {
     .attr("y2", height)
     .attr("stroke", "gray")
     .attr("stroke-width", 5)
-    .attr("stroke-dasharray", "20,10");
+    .attr("stroke-dasharray", "20,10")
+    .classed("grid-class", true);
+  container
+    .append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", width)
+    .attr("height", height)
+    .attr("stroke", "gray")
+    .attr("stroke-width", 5)
+    .attr("fill", "rgba(255, 255, 255, 0)")
+    .attr("stroke-dasharray", "20,10")
+    .classed("grid-class", true);
 
   /***** ZOOM BEHAVIOR *****/
 
@@ -196,7 +209,11 @@ function createForceDirectedGraph(jsonUrl) {
   const markerColors = {
     red: "red",
     blue: "blue",
+    yellow: "yellow",
     green: "green",
+    purple: "purple",
+    brown: "brown",
+    black: "black",
     // Add more colors if needed
   };
 
@@ -281,7 +298,7 @@ function createForceDirectedGraph(jsonUrl) {
         .selectAll("circle")
         .data(nodes)
         .join("circle")
-        .attr("fill", (nodeData) => (nodeData.completed ? colorPalette.nodeColors.green : colorPalette.nodeColors.blue))
+        .attr("fill", (nodeData) => (nodeData.completed ? colorPalette.nodeColors.green : nodeData.linkColor))
         .attr("r", 15) // Increase node radius for more spacing
         .attr("class", "node")
         .attr("data-code", (nodeData) => nodeData.code)
@@ -410,7 +427,7 @@ function createForceDirectedGraph(jsonUrl) {
   // Event listener and button for toggling course completion
   popup
     .append("button")
-    .text("Mark as Completed")
+    .text("Toggle Completion")
     .on("click", (mouseEvent) => toggleCompletion(mouseEvent.target));
 
   /**
@@ -468,18 +485,17 @@ function createForceDirectedGraph(jsonUrl) {
    * @param {*} mouseEvent - Required info for button selection
    */
   function toggleCompletion(mouseEvent) {
-    console.log(mouseEvent);
     if (selectedNode) {
       selectedNode.completed = !selectedNode.completed;
 
       // Update button text based on completed state
-      mouseEvent.textContent = selectedNode.completed
-        ? "Mark as Incompleted"
-        : "Mark as Completed"
+      // mouseEvent.textContent = selectedNode.completed
+      //   ? "Mark as Incompleted"
+      //   : "Mark as Completed"
 
       // Update the node color based on completion status
-      node.attr("fill", (d) =>
-        d.completed ? colorPalette.nodeColors.green : d.children ? null : colorPalette.nodeColors.blue
+      node.attr("fill", (nodeData) =>
+        nodeData.completed ? colorPalette.nodeColors.green : nodeData.linkColor
       );
     }
   }
@@ -535,8 +551,63 @@ function createForceDirectedGraph(jsonUrl) {
   }
 }
 
-// CHANGE THIS WITH THE APPROPRIATE JSON FILE
-const jsonUrl = "./example.json";
+function populateDropdown(jsonFiles) {
+  const dropdown = document.getElementById("course-dropdown");
 
+  jsonFiles.forEach(file => {
+      let text = file.slice(2, -5); //removing the file extension
+      console.log(text);
+
+      let btn = document.createElement("button");
+      btn.textContent = "File: " + text;
+
+      // Add a click event listener to the button to handle the course selection
+      btn.addEventListener("click", function(mouseEvent) {
+          courseSelect(file, mouseEvent);
+      });
+
+      dropdown.appendChild(btn);
+  });
+}
+
+
+function courseSelect(file, mouseEvent) {
+  console.log(file);
+  jsonUrl = file;
+
+  // Get the existing graph container
+  const svgContainer = document.getElementById("svg-container");
+  let displayed = document.querySelector(".program-displayed");
+  displayed.innerHTML = "<u>Displayed Program:<u> " + file;
+  // content.appendChild(displayed);
+  // Remove all child nodes (i.e., the existing graph)
+  while (svgContainer.firstChild) {
+      svgContainer.removeChild(svgContainer.firstChild);
+  }
+
+  // Call your graph creation function with the new JSON file URL and the new container
+  createForceDirectedGraph(jsonUrl);
+}
+
+function toggleGrid() {
+  const grid = d3.selectAll(".grid-class");
+
+  grid.each(function (d, i) {
+    const element = d3.select(this);
+
+    if (element.classed("active") == true) {
+      element.classed("active", false);
+    }
+    else {
+      element.classed("active", true);
+    }
+  })
+}
+// CHANGE THIS WITH THE APPROPRIATE JSON FILE
+let jsonFiles = ["./example.json", "./example2.json", "./example3.json"];
+let jsonUrl = jsonFiles[0];
+
+populateDropdown(jsonFiles);
+// courseSelect(jsonFiles[0]);
 // Allows the magic to happen :)
 createForceDirectedGraph(jsonUrl);
