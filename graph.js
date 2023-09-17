@@ -51,7 +51,6 @@ const drag = (simulation) => {
     if (!dragEvent.active) simulation.alphaTarget(0.3).restart();
     nodeData.fx = nodeData.x;
     nodeData.fy = nodeData.y;
-    // console.log(dragEvent);
   }
 
   /**
@@ -109,7 +108,6 @@ function createForceDirectedGraph(jsonUrl) {
     // Get the current dimensions of the parent container
     const width = window.innerWidth;
     const height = window.innerHeight;
-    
 
     // Update the SVG dimensions
     svg.attr("width", width).attr("height", height);
@@ -298,7 +296,11 @@ function createForceDirectedGraph(jsonUrl) {
         .selectAll("circle")
         .data(nodes)
         .join("circle")
-        .attr("fill", (nodeData) => (nodeData.completed ? colorPalette.nodeColors.green : nodeData.linkColor))
+        .attr("fill", (nodeData) =>
+          nodeData.completed
+            ? colorPalette.nodeColors.green
+            : nodeData.linkColor
+        )
         .attr("r", 15) // Increase node radius for more spacing
         .attr("class", "node")
         .attr("data-code", (nodeData) => nodeData.code)
@@ -419,10 +421,7 @@ function createForceDirectedGraph(jsonUrl) {
     .style("white-space", "pre-wrap");
 
   // Event listener and button for closing
-  popup
-    .append("button")
-    .text("Close")
-    .on("click", closePopup);
+  popup.append("button").text("Close").on("click", closePopup);
 
   // Event listener and button for toggling course completion
   popup
@@ -481,7 +480,7 @@ function createForceDirectedGraph(jsonUrl) {
 
   /**
    * Allows classes to be marked as complete or not
-   * 
+   *
    * @param {*} mouseEvent - Required info for button selection
    */
   function toggleCompletion(mouseEvent) {
@@ -551,26 +550,37 @@ function createForceDirectedGraph(jsonUrl) {
   }
 }
 
+/**
+ * Takes the array of JSON files and makes them all selectable by the user
+ * 
+ * @param {*} jsonFiles - array of JSON files from dev
+ */
 function populateDropdown(jsonFiles) {
   const dropdown = document.getElementById("course-dropdown");
 
-  jsonFiles.forEach(file => {
-      let text = file.slice(2, -5); //removing the file extension
-      console.log(text);
+  // create a button for every JSON file and append it to the dropdown
+  jsonFiles.forEach((file) => {
+    let text = file.slice(2, -5); //removing the file extension
+    console.log(text);
 
-      let btn = document.createElement("button");
-      btn.textContent = "File: " + text;
+    let btn = document.createElement("button");
+    btn.textContent = "File: " + text;
 
-      // Add a click event listener to the button to handle the course selection
-      btn.addEventListener("click", function(mouseEvent) {
-          courseSelect(file, mouseEvent);
-      });
+    // Add a click event listener to the button to handle the course selection
+    btn.addEventListener("click", function (mouseEvent) {
+      courseSelect(file, mouseEvent);
+    });
 
-      dropdown.appendChild(btn);
+    dropdown.appendChild(btn);
   });
 }
 
-
+/**
+ * Generates a new graph with the selected JSON file from the user
+ * 
+ * @param {*} file 
+ * @param {*} mouseEvent 
+ */
 function courseSelect(file, mouseEvent) {
   console.log(file);
   jsonUrl = file;
@@ -582,7 +592,7 @@ function courseSelect(file, mouseEvent) {
   // content.appendChild(displayed);
   // Remove all child nodes (i.e., the existing graph)
   while (svgContainer.firstChild) {
-      svgContainer.removeChild(svgContainer.firstChild);
+    svgContainer.removeChild(svgContainer.firstChild);
   }
 
   // Call your graph creation function with the new JSON file URL and the new container
@@ -597,17 +607,23 @@ function toggleGrid() {
 
     if (element.classed("active") == true) {
       element.classed("active", false);
-    }
-    else {
+    } else {
       element.classed("active", true);
     }
-  })
+  });
 }
-// CHANGE THIS WITH THE APPROPRIATE JSON FILE
-let jsonFiles = ["./example.json", "./example2.json", "./example3.json"];
-let jsonUrl = jsonFiles[0];
 
-populateDropdown(jsonFiles);
-// courseSelect(jsonFiles[0]);
-// Allows the magic to happen :)
-createForceDirectedGraph(jsonUrl);
+function main() {
+  // ADD YOUR JSON FILES IN THIS ARRAY
+  let jsonFiles = ["./example.json", "./example2.json", "./example3.json"];
+  let jsonUrl = jsonFiles[0]; // set to the first file in the JSON array by default
+
+  // create the initial dropdown
+  populateDropdown(jsonFiles);
+
+  // Allows the magic to happen :)
+  createForceDirectedGraph(jsonUrl);
+}
+
+main();
+

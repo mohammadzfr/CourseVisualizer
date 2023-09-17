@@ -6,6 +6,8 @@ Display your college courses as an easy-to-understand **interactive graph**!
 
 This project displays course `codes`, `names`, `descriptions`, and `prerequisites` as a **force-directed graph** using [D3.js](https://d3js.org/)
 
+Feel free to fork this and make your own changes! I'd love to see your take on this project.
+
 ## Features
 - Draggable Nodes
 - Toggle Completed Courses
@@ -27,6 +29,15 @@ This project displays course `codes`, `names`, `descriptions`, and `prerequisite
 4. Run the HTML file in localhost
     - You can use the `Live Server` extension in VSCode or anything similar
 
+5. Currently `input.json` is used in `process_data.js` and `example.json`, `example2.json`, and `example3.json` are used in `graph.js`
+
+6. Enjoy!
+
+## Future Features
+- Adding a save/load feature for modified JSON files
+- A page that allows you to add your own courses through the UI without messing with JSON
+- Upload a transcript to automatically create a JSON with all completed classes
+- Adding a field to see which semester you took a course if at all
 ## Project Overview
 ```
 CourseVisualizer/
@@ -40,4 +51,6 @@ CourseVisualizer/
 |── process_data.js (for creating links out of nodes)
 |── example.json (ideal setup of nodes and links for graph.js)
 |── input.json (ideal setup of nodes for process_data.js)
+|── raw-catalogue.txt (Document where all the courses are scraped from)
+
 ```
