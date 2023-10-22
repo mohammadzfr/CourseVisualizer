@@ -21,8 +21,8 @@ Feel free to fork this and make your own changes! I'd love to see your take on t
 ```git clone https://github.com/mohammadzfr/CourseVisualizer```
 
 2. If you have a JSON file that only has nodes and no links between them, you can create links for it by using the `process_data.js` file, which will use the `prerequisites` field to create links
-    - I recommend downloading and using **[bun](https://bun.sh/)** to run the js file
-    - After downloading, use `bun process_data.js` in the `CourseVisualizer` directory
+    - I recommend downloading and using **[bun](https://bun.sh/)** or [NodeJS](https://nodejs.org/en) to run the js file
+    - After downloading, use `bun process_data.js` or `node process_data.js` in the `CourseVisualizer` directory
 
 3. Enter the PATH of your compatible JSON file into the `jsonUrl` variable in `graph.js`
 
@@ -42,15 +42,15 @@ Feel free to fork this and make your own changes! I'd love to see your take on t
 ```
 CourseVisualizer/
 |── assets/
-|   |── signature.ico (favicon)
-|   |── CourseVisThumbnail.png (thumbnail for README)
+|   |── signature.ico // favicon
+|   |── CourseVisThumbnail.png // thumbnail for README
 |
-|── index.html (boilerplate)
+|── index.html // boilerplate
 |── style.css
-|── graph.js (the main program)
-|── process_data.js (for creating links out of nodes)
-|── example.json (ideal setup of nodes and links for graph.js)
-|── input.json (ideal setup of nodes for process_data.js)
-|── raw-catalogue.txt (Document where all the courses are scraped from)
+|── graph.js // the main program
+|── process_data.js // for creating links out of nodes
+|── example.json // ideal setup of nodes and links for graph.js
+|── input.json // ideal setup of nodes for process_data.js
+|── raw-catalogue.txt // Document where all the courses are scraped from
 
 ```
